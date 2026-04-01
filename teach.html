@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python & ML — Nikhil Dubey</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050810;--surface:#0d1220;--gold:#c9a84c;--gold-l:#e8d5a3;--cream:#faf7f2;--muted:#6e7a8a;--border:rgba(88,166,255,0.15);--blue:#58a6ff;--cyan:#39d353;--purple:#bc8cff;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--cream);font-family:'Cormorant Garamond',serif;min-height:100vh;cursor:none;overflow-x:hidden;}
+#cur{position:fixed;width:8px;height:8px;background:var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(88,166,255,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s,top 0.12s;}
+/* MATRIX BG */
+.matrix-bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.matrix-bg canvas{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.04;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 4rem;background:rgba(5,8,16,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);text-decoration:none;}.nav-logo span{color:var(--gold);}
+.nav-back{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.nav-back:hover{color:var(--blue);}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 6rem 4rem;position:relative;z-index:1;}
+.page-tag{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--blue);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.8rem;opacity:0;animation:fadeUp 0.7s 0.1s forwards;}
+.page-tag::before{content:'';width:20px;height:1px;background:var(--blue);}
+.code-prefix{font-family:'JetBrains Mono',monospace;font-size:1rem;color:var(--cyan);display:block;margin-bottom:0.5rem;opacity:0;animation:fadeUp 0.7s 0.15s forwards;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,5rem);font-weight:900;line-height:1.0;color:var(--cream);opacity:0;animation:fadeUp 0.8s 0.25s forwards;}
+h1 em{font-style:italic;color:var(--blue);}
+.hero-line{width:0;height:1px;background:linear-gradient(90deg,var(--blue),transparent);margin:2rem 0;animation:expand 1s 0.8s forwards;}
+.hero-intro{font-size:1.2rem;font-weight:300;font-style:italic;color:rgba(250,247,242,0.6);line-height:1.8;max-width:700px;opacity:0;animation:fadeUp 0.8s 0.7s forwards;}
+/* CODE BLOCK */
+.code-block{background:#0d1117;border:1px solid rgba(88,166,255,0.2);border-radius:6px;padding:2rem;font-family:'JetBrains Mono',monospace;font-size:0.85rem;line-height:1.8;margin:2rem 0;opacity:0;animation:fadeUp 0.8s 1s forwards;overflow-x:auto;}
+.c-comment{color:#6a737d;}
+.c-keyword{color:var(--purple);}
+.c-func{color:var(--blue);}
+.c-str{color:var(--cyan);}
+.c-num{color:#f8c555;}
+/* CONTENT */
+.content{padding:0 6rem 8rem;position:relative;z-index:1;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem;}
+.card{background:var(--surface);border:1px solid var(--border);padding:2.5rem;transition:all 0.4s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--blue),var(--purple));opacity:0;transition:opacity 0.4s;}
+.card{position:relative;overflow:hidden;}
+.card:hover::before{opacity:1;}
+.card:hover{border-color:rgba(88,166,255,0.3);transform:translateY(-4px);}
+.card-icon{font-size:2rem;margin-bottom:1.2rem;display:block;}
+.card-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:0.8rem;}
+.card-body{font-size:1rem;color:rgba(250,247,242,0.5);line-height:1.8;font-style:italic;}
+.mono-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--blue);background:rgba(88,166,255,0.08);padding:0.2rem 0.6rem;border-radius:3px;display:inline-block;margin-bottom:0.8rem;}
+.section-head{margin:4rem 0 2rem;}
+.s-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--blue);margin-bottom:0.8rem;}
+.s-h{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);}
+.s-h em{color:var(--blue);font-style:italic;}
+/* ML PIPELINE */
+.pipeline{display:flex;align-items:center;gap:0;margin:2rem 0;overflow-x:auto;padding-bottom:1rem;}
+.pipe-step{flex-shrink:0;background:var(--surface);border:1px solid var(--border);padding:1.5rem 1.2rem;text-align:center;min-width:140px;transition:all 0.3s;}
+.pipe-step:hover{border-color:var(--blue);background:rgba(88,166,255,0.05);}
+.pipe-arrow{color:var(--blue);font-size:1.2rem;padding:0 0.5rem;flex-shrink:0;}
+.pipe-icon{font-size:1.5rem;margin-bottom:0.6rem;display:block;}
+.pipe-name{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:0.3rem;}
+.pipe-desc{font-size:0.8rem;color:var(--muted);font-style:italic;}
+/* TECH TAGS */
+.tag-cloud{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1.5rem;}
+.tech-tag{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;padding:0.4rem 1rem;border:1px solid;border-radius:3px;transition:all 0.3s;cursor:default;}
+.tech-tag.py{border-color:rgba(248,197,85,0.3);color:#f8c555;}.tech-tag.py:hover{background:rgba(248,197,85,0.08);}
+.tech-tag.ml{border-color:rgba(188,140,255,0.3);color:var(--purple);}.tech-tag.ml:hover{background:rgba(188,140,255,0.08);}
+.tech-tag.data{border-color:rgba(88,166,255,0.3);color:var(--blue);}.tech-tag.data:hover{background:rgba(88,166,255,0.08);}
+.tech-tag.tool{border-color:rgba(57,211,83,0.3);color:var(--cyan);}.tech-tag.tool:hover{background:rgba(57,211,83,0.08);}
+/* CTA */
+.cta-bar{background:linear-gradient(135deg,rgba(88,166,255,0.08),rgba(188,140,255,0.08));border-top:1px solid var(--border);padding:4rem 6rem;display:flex;justify-content:space-between;align-items:center;}
+.cta-text{font-family:'Playfair Display',serif;font-size:1.8rem;font-style:italic;color:var(--cream);}
+.cta-btn{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;padding:1rem 2.5rem;background:transparent;color:var(--blue);border:1px solid var(--blue);cursor:pointer;text-decoration:none;transition:all 0.3s;}
+.cta-btn:hover{background:var(--blue);color:var(--bg);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+.reveal.visible{opacity:1;transform:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes expand{from{width:0}to{width:120px}}
+@media(max-width:800px){nav{padding:1rem 1.5rem;}.hero{padding:6rem 2rem 3rem;}.content{padding:0 2rem 4rem;}.grid-2,.grid-3{grid-template-columns:1fr;}.pipeline{flex-direction:column;align-items:flex-start;}.pipe-arrow{transform:rotate(90deg);}.cta-bar{flex-direction:column;gap:2rem;padding:3rem 2rem;}}
+</style>
+</head>
+<body>
+<div class="matrix-bg"><canvas id="matrixCanvas"></canvas></div>
+<div id="cur"></div><div id="cur-ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">N<span>.</span>Dubey</a>
+  <a href="index.html" class="nav-back">← Back to Profile</a>
+</nav>
+ 
+<div class="hero">
+  <div class="page-tag">Technical Stack</div>
+  <span class="code-prefix">&gt;&gt;&gt; import nikhil_dubey as nd</span>
+  <h1>Python &<br><em>Machine Learning</em></h1>
+  <div class="hero-line"></div>
+  <p class="hero-intro">Building intelligent systems with Python and ML — teaching machines to find patterns in data so humans can make better decisions in the real world.</p>
+  <div class="code-block">
+<span class="c-comment"># Nikhil Dubey — Tech Stack</span>
+<span class="c-keyword">class</span> <span class="c-func">Developer</span>:
+    <span class="c-keyword">def</span> <span class="c-func">__init__</span>(self):
+        self.name = <span class="c-str">"Nikhil Dubey"</span>
+        self.languages = [<span class="c-str">"Python"</span>, <span class="c-str">"C"</span>]
+        self.interests = [<span class="c-str">"ML"</span>, <span class="c-str">"Data Science"</span>, <span class="c-str">"AI"</span>]
+        self.also_reads = <span class="c-str">"Dostoevsky between debugging sessions"</span>
+ 
+    <span class="c-keyword">def</span> <span class="c-func">solve</span>(self, problem):
+        <span class="c-keyword">return</span> <span class="c-str">f"Thinking both computationally AND humanistically"</span>
+  </div>
+</div>
+ 
+<div class="content">
+  <div class="section-head reveal">
+    <div class="s-tag">Machine Learning Pipeline</div>
+    <div class="s-h">How I <em>Build Models</em></div>
+  </div>
+  <div class="pipeline reveal">
+    <div class="pipe-step"><span class="pipe-icon">📊</span><div class="pipe-name">Data</div><div class="pipe-desc">Collection & cleaning</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><span class="pipe-icon">🔍</span><div class="pipe-name">EDA</div><div class="pipe-desc">Explore & visualize</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><span class="pipe-icon">⚙️</span><div class="pipe-name">Features</div><div class="pipe-desc">Engineer & select</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><span class="pipe-icon">🧠</span><div class="pipe-name">Model</div><div class="pipe-desc">Train & validate</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><span class="pipe-icon">📈</span><div class="pipe-name">Evaluate</div><div class="pipe-desc">Metrics & tuning</div></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step"><span class="pipe-icon">🚀</span><div class="pipe-name">Deploy</div><div class="pipe-desc">Production & monitor</div></div>
+  </div>
+ 
+  <div class="section-head reveal">
+    <div class="s-tag">My Toolkit</div>
+    <div class="s-h">Technologies I <em>Work With</em></div>
+  </div>
+  <div class="card reveal">
+    <div class="mono-tag">Python Ecosystem</div>
+    <div class="tag-cloud">
+      <span class="tech-tag py">Python 3.x</span><span class="tech-tag py">NumPy</span><span class="tech-tag py">Pandas</span><span class="tech-tag py">Matplotlib</span><span class="tech-tag py">Seaborn</span>
+      <span class="tech-tag ml">Scikit-learn</span><span class="tech-tag ml">TensorFlow</span><span class="tech-tag ml">Neural Networks</span><span class="tech-tag ml">Regression</span><span class="tech-tag ml">Classification</span>
+      <span class="tech-tag data">Jupyter Notebook</span><span class="tech-tag data">SQL</span><span class="tech-tag data">Data Structures</span><span class="tech-tag data">Algorithms</span>
+      <span class="tech-tag tool">Git</span><span class="tech-tag tool">Linux</span><span class="tech-tag tool">VS Code</span><span class="tech-tag tool">C Programming</span>
+    </div>
+  </div>
+ 
+  <div class="section-head reveal">
+    <div class="s-tag">Core Concepts</div>
+    <div class="s-h">What I <em>Know</em></div>
+  </div>
+  <div class="grid-3 reveal">
+    <div class="card"><span class="card-icon">🧮</span><div class="card-title">Supervised Learning</div><div class="card-body">Linear & logistic regression, decision trees, SVMs, and neural networks for labeled datasets.</div></div>
+    <div class="card"><span class="card-icon">🔮</span><div class="card-title">Unsupervised Learning</div><div class="card-body">K-means clustering, PCA for dimensionality reduction, and pattern discovery without labels.</div></div>
+    <div class="card"><span class="card-icon">🌐</span><div class="card-title">Deep Learning</div><div class="card-body">Fundamentals of neural networks, backpropagation, activation functions, and model optimization.</div></div>
+    <div class="card"><span class="card-icon">📐</span><div class="card-title">Data Structures</div><div class="card-body">Arrays, linked lists, trees, graphs, hash tables — the foundation of efficient computation.</div></div>
+    <div class="card"><span class="card-icon">⚡</span><div class="card-title">Algorithm Design</div><div class="card-body">Sorting, searching, dynamic programming, greedy algorithms, and complexity analysis.</div></div>
+    <div class="card"><span class="card-icon">🔗</span><div class="card-title">Networking & OS</div><div class="card-body">TCP/IP protocols, process management, memory allocation, and concurrency fundamentals.</div></div>
+  </div>
+</div>
+ 
+<div class="cta-bar">
+  <div class="cta-text">"Teaching machines to think — so humans can think better."</div>
+  <a href="mca.html" class="cta-btn">View Full MCA Profile →</a>
+</div>
+ 
+<script>
+// Matrix rain
+const canvas=document.getElementById('matrixCanvas');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+const cols=Math.floor(canvas.width/20);const drops=Array(cols).fill(1);
+function drawMatrix(){
+  ctx.fillStyle='rgba(5,8,16,0.05)';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#58a6ff';ctx.font='12px JetBrains Mono,monospace';
+  drops.forEach((y,i)=>{
+    const txt=String.fromCharCode(0x30A0+Math.random()*96);
+    ctx.fillText(txt,i*20,y*20);
+    if(y*20>canvas.height&&Math.random()>0.975)drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(drawMatrix,50);
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
+ 
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animR(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);}animR();
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
+ 

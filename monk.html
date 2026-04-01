@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menace to Monk — Nikhil Dubey</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080604;--surface:#120e09;--gold:#c9a84c;--gold-l:#e8d5a3;--cream:#faf7f2;--muted:#7a6a58;--border:rgba(201,168,76,0.2);--rust:#8b3a2a;--amber:#d4750a;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--cream);font-family:'Cormorant Garamond',serif;min-height:100vh;cursor:none;overflow-x:hidden;}
+#cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(201,168,76,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s,top 0.12s;}
+/* CANDLE PARTICLES */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.particle{position:absolute;bottom:0;width:2px;background:linear-gradient(180deg,rgba(201,168,76,0.8),rgba(212,117,10,0.4),transparent);border-radius:2px;animation:rise linear infinite;pointer-events:none;}
+@keyframes rise{0%{transform:translateY(0) scaleX(1);opacity:0.6;}100%{transform:translateY(-100vh) scaleX(0);opacity:0;}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 4rem;background:rgba(8,6,4,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);text-decoration:none;}.nav-logo span{color:var(--gold);}
+.nav-back{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;}
+.nav-back:hover{color:var(--gold);}
+/* SPLIT HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;z-index:1;}
+.hero-half{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 4rem;}
+.hero-half.menace{background:linear-gradient(135deg,#0a0504,#1a0a06);border-right:1px solid var(--border);}
+.hero-half.monk{background:linear-gradient(135deg,#040810,#08120a);}
+.half-tag{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.7s 0.1s forwards;}
+.half-tag.m-tag{color:var(--rust);}
+.half-tag.mo-tag{color:#4caf82;}
+.half-h{font-family:'Playfair Display',serif;font-size:clamp(3rem,5vw,5.5rem);font-weight:900;font-style:italic;line-height:0.95;opacity:0;animation:fadeUp 0.8s 0.25s forwards;}
+.half-h.m-h{color:var(--rust);}
+.half-h.mo-h{color:#4caf82;}
+.half-desc{font-size:1.1rem;font-weight:300;font-style:italic;color:rgba(250,247,242,0.5);line-height:1.8;margin-top:1.5rem;opacity:0;animation:fadeUp 0.8s 0.5s forwards;}
+.half-traits{display:flex;flex-direction:column;gap:0.6rem;margin-top:2rem;opacity:0;animation:fadeUp 0.8s 0.7s forwards;}
+.trait{display:flex;align-items:center;gap:0.8rem;font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.08em;color:rgba(250,247,242,0.4);text-transform:uppercase;}
+.trait-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.trait-dot.bad{background:var(--rust);}
+.trait-dot.good{background:#4caf82;}
+/* ARROW DIVIDER */
+.divider{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;text-align:center;}
+.div-arrow{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold);display:block;animation:pulse 2s infinite;}
+.div-label{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-top:0.5rem;white-space:nowrap;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.9)}}
+/* CONTENT */
+.content{padding:0 6rem 8rem;position:relative;z-index:1;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem;}
+.section-head{margin:4rem 0 2rem;}
+.s-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.s-h{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);}
+.s-h em{color:var(--gold);font-style:italic;}
+/* TRANSFORMATION TIMELINE */
+.transform-steps{display:flex;flex-direction:column;gap:0;}
+.t-step{display:grid;grid-template-columns:100px 1fr;gap:2rem;padding:2.5rem;border:1px solid var(--border);border-top:none;background:var(--surface);transition:all 0.4s;position:relative;overflow:hidden;}
+.t-step:first-child{border-top:1px solid var(--border);}
+.t-step::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;transition:width 0.4s;}
+.t-step.past::before{background:rgba(139,58,42,0.3);}
+.t-step.now::before{background:rgba(201,168,76,0.2);}
+.t-step.future::before{background:rgba(76,175,130,0.2);}
+.t-step:hover::before{width:4px;}
+.t-step:hover{border-color:rgba(201,168,76,0.4);}
+.t-num{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;font-style:italic;line-height:1;opacity:0.2;}
+.t-num.past{color:var(--rust);}
+.t-num.now{color:var(--gold);}
+.t-num.future{color:#4caf82;}
+.t-content{}
+.t-phase{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.4rem;}
+.t-phase.past{color:var(--rust);}
+.t-phase.now{color:var(--gold);}
+.t-phase.future{color:#4caf82;}
+.t-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:0.5rem;}
+.t-desc{font-size:1rem;color:rgba(250,247,242,0.5);font-style:italic;line-height:1.7;}
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-bottom:2rem;}
+.pillar{background:var(--surface);border:1px solid var(--border);padding:2rem 1.5rem;text-align:center;transition:all 0.4s;position:relative;overflow:hidden;}
+.pillar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.4s;}
+.pillar:hover::after{transform:scaleX(1);}
+.pillar:hover{transform:translateY(-4px);border-color:rgba(201,168,76,0.4);}
+.pillar-icon{font-size:2rem;margin-bottom:1rem;display:block;}
+.pillar-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream);margin-bottom:0.4rem;}
+.pillar-desc{font-size:0.85rem;color:var(--muted);font-style:italic;}
+/* QUOTE */
+.big-quote{padding:6rem;background:linear-gradient(135deg,rgba(139,58,42,0.08),rgba(201,168,76,0.08),rgba(76,175,130,0.06));border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;margin:4rem 0;}
+.big-q-text{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3vw,2.5rem);font-style:italic;color:var(--cream);line-height:1.45;max-width:800px;margin:0 auto 2rem;}
+.big-q-attr{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+/* CTA */
+.cta-bar{background:var(--gold);padding:4rem 6rem;display:flex;justify-content:space-between;align-items:center;}
+.cta-text{font-family:'Playfair Display',serif;font-size:1.8rem;font-style:italic;color:var(--bg);}
+.cta-btn{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;padding:1rem 2.5rem;background:var(--bg);color:var(--gold);border:none;cursor:pointer;text-decoration:none;transition:all 0.3s;}
+.cta-btn:hover{background:rgba(8,6,4,0.8);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+.reveal.visible{opacity:1;transform:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:800px){nav{padding:1rem 1.5rem;}.hero{grid-template-columns:1fr;}.hero-half{padding:5rem 2rem 3rem;}.hero-half.menace{border-right:none;border-bottom:1px solid var(--border);}.divider{display:none;}.content{padding:0 2rem 4rem;}.grid-2{grid-template-columns:1fr;}.t-step{grid-template-columns:60px 1fr;gap:1rem;}.pillars{grid-template-columns:1fr 1fr;}.big-quote{padding:3rem 2rem;}.cta-bar{flex-direction:column;gap:2rem;padding:3rem 2rem;}}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<div id="cur"></div><div id="cur-ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">N<span>.</span>Dubey</a>
+  <a href="index.html" class="nav-back">← Back to Profile</a>
+</nav>
+ 
+<div class="hero">
+  <div class="hero-half menace">
+    <div class="half-tag m-tag">The Before</div>
+    <div class="half-h m-h">Menace</div>
+    <p class="half-desc">Distracted. Directionless. Living without discipline or purpose — drifting through time without intention.</p>
+    <div class="half-traits">
+      <div class="trait"><div class="trait-dot bad"></div><span>No structured routine</span></div>
+      <div class="trait"><div class="trait-dot bad"></div><span>Scattered focus</span></div>
+      <div class="trait"><div class="trait-dot bad"></div><span>Social media addiction</span></div>
+      <div class="trait"><div class="trait-dot bad"></div><span>Reactive, not proactive</span></div>
+      <div class="trait"><div class="trait-dot bad"></div><span>No long-term vision</span></div>
+    </div>
+  </div>
+  <div class="divider">
+    <span class="div-arrow">→</span>
+    <div class="div-label">Transformation</div>
+  </div>
+  <div class="hero-half monk">
+    <div class="half-tag mo-tag">The After</div>
+    <div class="half-h mo-h">Monk</div>
+    <p class="half-desc">Disciplined. Intentional. Devoted to learning, growth, and service — with monk-like focus on what truly matters.</p>
+    <div class="half-traits">
+      <div class="trait"><div class="trait-dot good"></div><span>Daily study routine</span></div>
+      <div class="trait"><div class="trait-dot good"></div><span>Deep, focused work</span></div>
+      <div class="trait"><div class="trait-dot good"></div><span>Reading over scrolling</span></div>
+      <div class="trait"><div class="trait-dot good"></div><span>Proactive goal setting</span></div>
+      <div class="trait"><div class="trait-dot good"></div><span>UPSC + MCA + Growth</span></div>
+    </div>
+  </div>
+</div>
+ 
+<div class="content">
+  <div class="section-head reveal">
+    <div class="s-tag">The Journey</div>
+    <div class="s-h">Phases of <em>Transformation</em></div>
+  </div>
+  <div class="transform-steps reveal">
+    <div class="t-step"><div class="t-num past">01</div><div class="t-content"><div class="t-phase past">The Menace Phase</div><div class="t-title">Living Without Intention</div><div class="t-desc">Drifting. No clear goal. Time wasted on distractions while potential sat dormant. This was the beginning — not the end.</div></div></div>
+    <div class="t-step"><div class="t-num past">02</div><div class="t-content"><div class="t-phase past">The Awakening</div><div class="t-title">The Moment of Clarity</div><div class="t-desc">Something shifted. A book, a conversation, a moment of silence. The realization that time is finite and purpose is chosen, not given.</div></div></div>
+    <div class="t-step"><div class="t-num now">03</div><div class="t-content"><div class="t-phase now">The Transition (Now)</div><div class="t-title">Building the Monk's Discipline</div><div class="t-desc">MCA. UPSC preparation. Daily reading. Structured study. Mentorship. The transformation is active — in progress — right now.</div></div></div>
+    <div class="t-step"><div class="t-num future">04</div><div class="t-content"><div class="t-phase future">The Vision</div><div class="t-title">Serving India as IAS Officer</div><div class="t-desc">The monk's discipline applied to public service. Technical knowledge combined with sociological insight — to solve India's real problems from the inside.</div></div></div>
+  </div>
+ 
+  <div class="section-head reveal">
+    <div class="s-tag">Four Pillars</div>
+    <div class="s-h">What the <em>Monk Practices</em></div>
+  </div>
+  <div class="pillars reveal">
+    <div class="pillar"><span class="pillar-icon">📚</span><div class="pillar-title">Deep Reading</div><div class="pillar-desc">Books over reels. Dostoevsky over doom-scrolling. Literary fiction as mental exercise.</div></div>
+    <div class="pillar"><span class="pillar-icon">🎯</span><div class="pillar-title">Single Focus</div><div class="pillar-desc">One goal at a time. UPSC, MCA, and growth — not fragmentation, but integration.</div></div>
+    <div class="pillar"><span class="pillar-icon">⏰</span><div class="pillar-title">Structured Time</div><div class="pillar-desc">Daily routines. Study schedules. Time as the most precious, non-renewable resource.</div></div>
+    <div class="pillar"><span class="pillar-icon">🧘</span><div class="pillar-title">Inner Stillness</div><div class="pillar-desc">Thinking before reacting. Silence as a tool. Clarity over noise, depth over speed.</div></div>
+  </div>
+ 
+  <div class="big-quote reveal">
+    <div class="big-q-text">"The menace was never the enemy. He was just a monk who hadn't found his monastery yet."</div>
+    <div class="big-q-attr">— Nikhil Dubey · Personal Reflection</div>
+  </div>
+</div>
+ 
+<div class="cta-bar">
+  <div class="cta-text">"Still becoming. Always in progress."</div>
+  <a href="articles.html" class="cta-btn">Read My Journey →</a>
+</div>
+ 
+<script>
+// Particles
+const pc=document.getElementById('particles');
+for(let i=0;i<25;i++){
+  const p=document.createElement('div');p.className='particle';
+  p.style.cssText=`left:${Math.random()*100}%;height:${30+Math.random()*60}px;animation-duration:${3+Math.random()*5}s;animation-delay:${Math.random()*4}s;opacity:${0.2+Math.random()*0.4};`;
+  pc.appendChild(p);
+}
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animR(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);}animR();
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

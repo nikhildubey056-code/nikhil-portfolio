@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UPSC Aspirant — Nikhil Dubey</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e0b08;--surface:#1a1208;--gold:#c9a84c;--gold-l:#e8d5a3;--cream:#faf7f2;--muted:#8a7560;--border:rgba(201,168,76,0.2);--saffron:#ff9933;--green:#138808;--navy:#000080;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--cream);font-family:'Cormorant Garamond',serif;min-height:100vh;cursor:none;}
+#cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+#cur-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(201,168,76,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s,top 0.12s;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 4rem;background:rgba(14,11,8,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);text-decoration:none;}.nav-logo span{color:var(--gold);}
+.nav-back{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:0.5rem;transition:color 0.3s;}
+.nav-back:hover{color:var(--gold);}
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8rem 6rem 4rem;position:relative;overflow:hidden;background:radial-gradient(ellipse at 20% 50%,rgba(255,153,51,0.04),transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(19,136,8,0.04),transparent 60%);}
+.tricolor{position:absolute;top:0;left:0;right:0;height:4px;display:flex;}
+.tc-s{flex:1;}.tc-s:nth-child(1){background:var(--saffron);}.tc-s:nth-child(2){background:#fff;}.tc-s:nth-child(3){background:var(--green);}
+.hero::after{content:'भारत';position:absolute;right:-1rem;top:50%;transform:translateY(-50%);font-size:20vw;font-weight:900;color:rgba(201,168,76,0.03);line-height:1;pointer-events:none;font-family:'Playfair Display',serif;}
+.page-tag{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:0.8rem;opacity:0;animation:fadeUp 0.7s 0.1s forwards;}
+.page-tag::before{content:'';width:20px;height:1px;background:var(--gold);}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,5rem);font-weight:900;line-height:1.0;color:var(--cream);opacity:0;animation:fadeUp 0.8s 0.25s forwards;}
+h1 em{font-style:italic;color:var(--gold);}
+.hero-line{width:0;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:2rem 0;animation:expand 1s 0.8s forwards;}
+.hero-intro{font-size:1.2rem;font-weight:300;font-style:italic;color:rgba(250,247,242,0.65);line-height:1.8;max-width:700px;opacity:0;animation:fadeUp 0.8s 0.7s forwards;}
+.destination{display:inline-flex;align-items:center;gap:0.8rem;margin-top:2rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0;animation:fadeUp 0.8s 1s forwards;}
+.dest-arrow{font-size:1.2rem;}
+/* CONTENT */
+.content{padding:0 6rem 8rem;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem;}
+.card{background:var(--surface);border:1px solid var(--border);padding:2.5rem;position:relative;overflow:hidden;transition:all 0.4s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--saffron),var(--gold),var(--green));transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
+.card:hover::before{transform:scaleX(1);}
+.card:hover{border-color:rgba(201,168,76,0.4);transform:translateY(-4px);}
+.card-icon{font-size:2rem;margin-bottom:1.2rem;display:block;}
+.card-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:0.8rem;}
+.card-body{font-size:1rem;color:rgba(250,247,242,0.55);line-height:1.8;font-style:italic;}
+.section-head{margin:4rem 0 2rem;}
+.s-tag{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem;}
+.s-h{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--cream);}
+.s-h em{color:var(--gold);font-style:italic;}
+/* GS PAPERS */
+.gs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+.gs-card{background:var(--surface);border:1px solid var(--border);padding:1.8rem 1.2rem;text-align:center;transition:all 0.4s;cursor:default;}
+.gs-card:hover{border-color:var(--gold);background:rgba(201,168,76,0.04);}
+.gs-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--gold);margin-bottom:0.5rem;}
+.gs-label{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.gs-topic{font-size:0.9rem;color:rgba(250,247,242,0.5);font-style:italic;margin-top:0.5rem;}
+/* QUOTE */
+.quote-block{background:linear-gradient(135deg,rgba(255,153,51,0.06),rgba(19,136,8,0.06));border-left:3px solid var(--gold);padding:2.5rem;margin:2rem 0;}
+.quote-text{font-family:'Playfair Display',serif;font-size:1.5rem;font-style:italic;color:var(--cream);line-height:1.5;margin-bottom:1rem;}
+.quote-attr{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;}
+/* ROADMAP */
+.roadmap{display:flex;gap:0;overflow:hidden;}
+.road-step{flex:1;padding:2rem 1.5rem;border-right:1px solid var(--border);background:var(--surface);transition:all 0.3s;text-align:center;}
+.road-step:last-child{border-right:none;}
+.road-step:hover{background:rgba(201,168,76,0.04);}
+.road-icon{font-size:1.8rem;margin-bottom:1rem;display:block;}
+.road-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:0.4rem;}
+.road-desc{font-size:0.85rem;color:var(--muted);font-style:italic;}
+/* CTA */
+.cta-bar{background:linear-gradient(135deg,rgba(255,153,51,0.15),rgba(201,168,76,0.15),rgba(19,136,8,0.1));border-top:1px solid var(--border);padding:4rem 6rem;display:flex;justify-content:space-between;align-items:center;}
+.cta-text{font-family:'Playfair Display',serif;font-size:1.8rem;font-style:italic;color:var(--cream);}
+.cta-btn{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;padding:1rem 2.5rem;background:var(--gold);color:var(--bg);border:none;cursor:pointer;text-decoration:none;transition:all 0.3s;}
+.cta-btn:hover{background:var(--gold-l);}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+.reveal.visible{opacity:1;transform:none;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes expand{from{width:0}to{width:120px}}
+@media(max-width:800px){nav{padding:1rem 1.5rem;}.hero{padding:6rem 2rem 3rem;}.content{padding:0 2rem 4rem;}.grid-2,.grid-3,.gs-grid{grid-template-columns:1fr;}.roadmap{flex-direction:column;}.cta-bar{flex-direction:column;gap:2rem;padding:3rem 2rem;}}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">N<span>.</span>Dubey</a>
+  <a href="index.html" class="nav-back">← Back to Profile</a>
+</nav>
+ 
+<div class="hero">
+  <div class="tricolor"><div class="tc-s"></div><div class="tc-s"></div><div class="tc-s"></div></div>
+  <div class="page-tag">Civil Service Dream</div>
+  <h1>UPSC<br><em>Aspirant</em></h1>
+  <div class="hero-line"></div>
+  <p class="hero-intro">The dream of serving India through the Indian Administrative Service — studying Sociology, General Studies, and Governance to understand the nation I wish to serve.</p>
+  <div class="destination"><span>Ranchi</span><span class="dest-arrow">→</span><span style="color:var(--gold-l);">LBSNAA, Mussoorie</span></div>
+</div>
+ 
+<div class="content">
+  <div class="section-head reveal">
+    <div class="s-tag">The Examination</div>
+    <div class="s-h">UPSC Civil Services <em>Structure</em></div>
+  </div>
+  <div class="roadmap reveal">
+    <div class="road-step"><span class="road-icon">📝</span><div class="road-title">Prelims</div><div class="road-desc">GS Paper I & CSAT — MCQ based</div></div>
+    <div class="road-step"><span class="road-icon">✍️</span><div class="road-title">Mains</div><div class="road-desc">9 Papers including Optional Subject</div></div>
+    <div class="road-step"><span class="road-icon">🎤</span><div class="road-title">Interview</div><div class="road-desc">Personality Test by UPSC Board</div></div>
+    <div class="road-step"><span class="road-icon">🏛️</span><div class="road-title">IAS / IPS / IFS</div><div class="road-desc">Allocation based on rank & preference</div></div>
+  </div>
+ 
+  <div class="section-head reveal">
+    <div class="s-tag">General Studies Papers</div>
+    <div class="s-h">What I <em>Study</em></div>
+  </div>
+  <div class="gs-grid reveal">
+    <div class="gs-card"><div class="gs-num">GS I</div><div class="gs-label">Paper 1</div><div class="gs-topic">History, Geography & Society</div></div>
+    <div class="gs-card"><div class="gs-num">GS II</div><div class="gs-label">Paper 2</div><div class="gs-topic">Governance, Polity & IR</div></div>
+    <div class="gs-card"><div class="gs-num">GS III</div><div class="gs-label">Paper 3</div><div class="gs-topic">Economy, Tech & Environment</div></div>
+    <div class="gs-card"><div class="gs-num">GS IV</div><div class="gs-label">Paper 4</div><div class="gs-topic">Ethics, Integrity & Aptitude</div></div>
+  </div>
+ 
+  <div class="section-head reveal">
+    <div class="s-tag">Optional Subject</div>
+    <div class="s-h">Why <em>Sociology?</em></div>
+  </div>
+  <div class="grid-2 reveal">
+    <div class="card"><span class="card-icon">🏘️</span><div class="card-title">Understanding India</div><div class="card-body">Sociology helps decode caste, class, gender, and religion in India — the very forces a civil servant must navigate and address every single day in the field.</div></div>
+    <div class="card"><span class="card-icon">⚖️</span><div class="card-title">Policy Insight</div><div class="card-body">From Durkheim to Ambedkar — sociological theories illuminate why policies succeed or fail, and how institutions shape human behavior across generations.</div></div>
+    <div class="card"><span class="card-icon">🔍</span><div class="card-title">Critical Thinking</div><div class="card-body">Studying social structures, stratification, and change trains the mind to ask harder questions: Who benefits? Who is excluded? What are the unintended consequences?</div></div>
+    <div class="card"><span class="card-icon">💡</span><div class="card-title">The CS Advantage</div><div class="card-body">My MCA background gives me a unique edge — I can apply computational thinking to social problems, bridging data analysis with humanistic understanding of ground realities.</div></div>
+  </div>
+ 
+  <div class="quote-block reveal">
+    <div class="quote-text">"You study to serve, not to succeed. The rank is a means. The villages, the people, the problems — that is the end."</div>
+    <div class="quote-attr">— Nikhil Dubey · Personal Conviction</div>
+  </div>
+</div>
+ 
+<div class="cta-bar">
+  <div class="cta-text">"Ranchi → LBSNAA. One exam at a time."</div>
+  <a href="sociology.html" class="cta-btn">Explore Sociology →</a>
+</div>
+ 
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animR(){rx+=(mx-rx)*0.15;ry+=(my-ry)*0.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);}animR();
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');});},{threshold:0.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
