@@ -16,7 +16,7 @@
   html { scroll-behavior:smooth; }
   body { background:var(--cream); color:var(--ink); font-family:'Cormorant Garamond',serif; overflow-x:hidden; min-height:100vh; }
   body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; z-index:1000; opacity:0.4; }
-
+ 
   /* NAV */
   nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.2rem 4rem; background:rgba(250,247,242,0.9); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
   .nav-logo { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--ink); text-decoration:none; }
@@ -26,7 +26,7 @@
   .nav-links a:hover, .nav-links a.active { color:var(--gold); }
   .btn-sm { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.5rem 1.2rem; background:var(--gold); color:var(--ink); border:none; cursor:pointer; text-decoration:none; transition:all 0.3s; }
   .btn-sm:hover { background:var(--ink); color:var(--gold); }
-
+ 
   /* PAGE HEADER */
   .page-header { padding:8rem 6rem 4rem; background:var(--ink); position:relative; overflow:hidden; }
   .page-header::before { content:'Articles'; position:absolute; right:-2rem; top:50%; transform:translateY(-50%); font-family:'Playfair Display',serif; font-size:15rem; font-weight:900; font-style:italic; color:rgba(201,168,76,0.04); line-height:1; pointer-events:none; white-space:nowrap; }
@@ -34,14 +34,14 @@
   .page-title { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,5vw,4.5rem); font-weight:900; color:var(--cream); line-height:1.05; }
   .page-title em { font-style:italic; color:var(--gold); }
   .page-sub { font-size:1.15rem; color:rgba(250,247,242,0.55); font-style:italic; margin-top:1rem; font-weight:300; }
-
+ 
   /* MAIN LAYOUT */
   .main { display:grid; grid-template-columns:1fr 380px; gap:0; min-height:calc(100vh - 200px); }
-
+ 
   /* EDITOR PANEL */
   .editor-panel { padding:4rem; border-right:1px solid var(--border); background:var(--cream); }
   .panel-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
-
+ 
   /* PHOTO UPLOAD */
   .photo-section { margin-bottom:2.5rem; }
   .photo-label { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:0.8rem; display:block; }
@@ -55,7 +55,7 @@
   .photo-upload-content p { font-family:'Cormorant Garamond',serif; font-size:0.95rem; color:var(--muted); font-style:italic; }
   .photo-upload-content small { font-family:'JetBrains Mono',monospace; font-size:0.55rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; }
   .photo-change-btn { position:absolute; bottom:-5px; right:-5px; background:var(--gold); border:none; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:0.7rem; display:none; align-items:center; justify-content:center; }
-
+ 
   /* FORM FIELDS */
   .field { margin-bottom:1.8rem; }
   .field-label { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); margin-bottom:0.6rem; display:block; }
@@ -68,10 +68,10 @@
   .field input:focus, .field select:focus, .field textarea:focus { border-color:var(--gold); background:white; }
   .field textarea { min-height:260px; line-height:1.8; }
   .field select { appearance:none; cursor:pointer; }
-
+ 
   /* CHAR COUNT */
   .char-count { font-family:'JetBrains Mono',monospace; font-size:0.55rem; color:var(--muted); text-align:right; margin-top:0.3rem; letter-spacing:0.1em; }
-
+ 
   /* EDITOR ACTIONS */
   .editor-actions { display:flex; gap:1rem; margin-top:2rem; }
   .btn-publish { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; padding:1rem 2rem; background:var(--ink); color:var(--cream); border:none; cursor:pointer; transition:all 0.3s; flex:1; }
@@ -80,24 +80,24 @@
   .btn-draft:hover { border-color:var(--gold); color:var(--gold); }
   .btn-clear { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; padding:1rem 1.5rem; background:transparent; color:var(--muted); border:1px solid var(--border); cursor:pointer; transition:all 0.3s; }
   .btn-clear:hover { border-color:var(--rust); color:var(--rust); }
-
+ 
   /* TOAST */
   .toast { position:fixed; bottom:2rem; right:2rem; background:var(--ink); color:var(--cream); padding:1rem 2rem; font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.1em; z-index:999; transform:translateY(100px); opacity:0; transition:all 0.4s; border-left:3px solid var(--gold); }
   .toast.show { transform:translateY(0); opacity:1; }
   .toast.success { border-left-color: #4a6741; }
   .toast.error { border-left-color: var(--rust); }
-
+ 
   /* ARTICLES LIST PANEL */
   .list-panel { padding:4rem 2.5rem; background:var(--parchment); overflow-y:auto; max-height:calc(100vh - 80px); position:sticky; top:80px; }
   .list-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
   .list-title { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--ink); }
   .list-count { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--gold); letter-spacing:0.1em; background:rgba(201,168,76,0.1); padding:0.3rem 0.7rem; }
-
+ 
   /* FILTER */
   .filter-bar { display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap; }
   .filter-btn { font-family:'JetBrains Mono',monospace; font-size:0.55rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.35rem 0.8rem; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.2s; }
   .filter-btn.active, .filter-btn:hover { background:var(--gold); color:var(--ink); border-color:var(--gold); }
-
+ 
   /* ARTICLE ITEMS */
   .article-item { background:var(--cream); border:1px solid var(--border); padding:1.5rem; margin-bottom:1rem; position:relative; transition:all 0.3s; cursor:pointer; }
   .article-item:hover { border-color:var(--gold); transform:translateX(4px); }
@@ -113,12 +113,12 @@
   .status-badge { font-family:'JetBrains Mono',monospace; font-size:0.5rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.2rem 0.5rem; }
   .status-badge.published { background:rgba(74,103,65,0.1); color:var(--success); border:1px solid rgba(74,103,65,0.3); }
   .status-badge.draft { background:rgba(107,92,78,0.1); color:var(--muted); border:1px solid var(--border); }
-
+ 
   /* EMPTY STATE */
   .empty-state { text-align:center; padding:3rem 1rem; }
   .empty-state span { font-size:3rem; display:block; margin-bottom:1rem; opacity:0.4; }
   .empty-state p { font-style:italic; color:var(--muted); font-size:0.95rem; }
-
+ 
   /* READ MODAL */
   .read-modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:500; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; backdrop-filter:blur(8px); padding:2rem; }
   .read-modal-overlay.active { opacity:1; pointer-events:all; }
@@ -132,11 +132,11 @@
   .read-modal-photo { width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid var(--gold); margin-bottom:1rem; display:none; }
   .read-modal-body { padding:3rem; }
   .read-modal-content { font-size:1.1rem; line-height:2; color:var(--ink); white-space:pre-wrap; }
-
+ 
   /* ANIMATIONS */
   @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
   @keyframes modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
+ 
   /* RESPONSIVE */
   @media(max-width:1000px){
     .main { grid-template-columns:1fr; }
@@ -149,7 +149,7 @@
 </style>
 </head>
 <body>
-
+ 
 <!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">N<span>.</span>Dubey</a>
@@ -160,22 +160,22 @@
     <li><a href="index.html#" class="btn-sm">View Profile</a></li>
   </ul>
 </nav>
-
+ 
 <!-- PAGE HEADER -->
 <div class="page-header">
   <p class="page-label">✦ Your Writing Space</p>
   <h1 class="page-title">Articles &<br><em>Reflections</em></h1>
   <p class="page-sub">Write. Reflect. Publish. Share your journey.</p>
 </div>
-
+ 
 <!-- MAIN -->
 <div class="main">
-
+ 
   <!-- EDITOR -->
   <div class="editor-panel">
     <div class="panel-label" id="editorLabel">✦ Write New Article</div>
     <input type="hidden" id="editingId">
-
+ 
     <!-- PHOTO UPLOAD FOR ARTICLE -->
     <div class="photo-section">
       <label class="photo-label">Article Cover Photo (Optional)</label>
@@ -189,7 +189,7 @@
         <img id="coverPreview" src="" alt="Cover" style="display:none;width:100%;height:160px;object-fit:cover;border-radius:2px;">
       </div>
     </div>
-
+ 
     <!-- PROFILE PHOTO UPLOAD -->
     <div class="photo-section">
       <label class="photo-label">Your Profile Photo</label>
@@ -209,13 +209,13 @@
         </div>
       </div>
     </div>
-
+ 
     <div class="field">
       <label class="field-label">Article Title *</label>
       <input type="text" id="titleInput" placeholder="e.g. Why Sociology is the Heart of UPSC…" maxlength="120">
       <div class="char-count"><span id="titleCount">0</span>/120</div>
     </div>
-
+ 
     <div class="field">
       <label class="field-label">Category</label>
       <select id="categoryInput">
@@ -229,33 +229,33 @@
         <option value="General Studies">General Studies</option>
       </select>
     </div>
-
+ 
     <div class="field">
       <label class="field-label">Article Content *</label>
       <textarea id="contentInput" placeholder="Start writing your thoughts here...&#10;&#10;Share your perspective on UPSC preparation, technology, society, or your personal journey from Menace to Monk.&#10;&#10;Every great civil servant was once just a student with a notebook and a dream."></textarea>
       <div class="char-count"><span id="contentCount">0</span> words</div>
     </div>
-
+ 
     <div class="editor-actions">
       <button class="btn-publish" onclick="publishArticle()">✦ Publish Article</button>
       <button class="btn-draft" onclick="saveDraft()">Save Draft</button>
       <button class="btn-clear" onclick="clearEditor()">Clear</button>
     </div>
   </div>
-
+ 
   <!-- ARTICLES LIST -->
   <div class="list-panel">
     <div class="list-header">
       <div class="list-title">Your Articles</div>
       <div class="list-count" id="articleCount">0 Articles</div>
     </div>
-
+ 
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterArticles('all', this)">All</button>
       <button class="filter-btn" onclick="filterArticles('published', this)">Published</button>
       <button class="filter-btn" onclick="filterArticles('draft', this)">Drafts</button>
     </div>
-
+ 
     <div id="articlesList">
       <div class="empty-state">
         <span>✍️</span>
@@ -264,7 +264,7 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- READ MODAL -->
 <div class="read-modal-overlay" id="readModal">
   <div class="read-modal">
@@ -281,13 +281,13 @@
     </div>
   </div>
 </div>
-
+ 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
-
+ 
 <script>
   let currentFilter = 'all';
-
+ 
   // Load profile photo
   const savedProfile = localStorage.getItem('nikhil_photo');
   if(savedProfile) {
@@ -295,7 +295,7 @@
     document.getElementById('profilePreview').style.display = 'block';
     document.getElementById('profileContent').style.display = 'none';
   }
-
+ 
   // Cover upload
   function handleCoverUpload(e) {
     const file = e.target.files[0]; if(!file) return;
@@ -307,7 +307,7 @@
     };
     reader.readAsDataURL(file);
   }
-
+ 
   // Profile upload
   function handleProfileUpload(e) {
     const file = e.target.files[0]; if(!file) return;
@@ -321,7 +321,7 @@
     };
     reader.readAsDataURL(file);
   }
-
+ 
   // Char count
   document.getElementById('titleInput').addEventListener('input', function() {
     document.getElementById('titleCount').textContent = this.value.length;
@@ -330,11 +330,11 @@
     const words = this.value.trim() ? this.value.trim().split(/\s+/).length : 0;
     document.getElementById('contentCount').textContent = words;
   });
-
+ 
   // Save article
   function getArticles() { return JSON.parse(localStorage.getItem('nikhil_articles') || '[]'); }
   function saveArticles(arr) { localStorage.setItem('nikhil_articles', JSON.stringify(arr)); }
-
+ 
   function publishArticle() {
     const title = document.getElementById('titleInput').value.trim();
     const content = document.getElementById('contentInput').value.trim();
@@ -343,20 +343,20 @@
     saveArticleWithStatus('published');
     showToast('✦ Article published!', 'success');
   }
-
+ 
   function saveDraft() {
     const title = document.getElementById('titleInput').value.trim();
     if(!title) { showToast('✕ Add a title to save draft', 'error'); return; }
     saveArticleWithStatus('draft');
     showToast('Draft saved', 'success');
   }
-
+ 
   function saveArticleWithStatus(status) {
     const articles = getArticles();
     const editingId = document.getElementById('editingId').value;
     const cover = document.getElementById('coverPreview').src || null;
     const profile = localStorage.getItem('nikhil_photo') || null;
-
+ 
     const article = {
       id: editingId || Date.now().toString(),
       title: document.getElementById('titleInput').value.trim(),
@@ -367,19 +367,19 @@
       cover: cover && cover !== window.location.href ? cover : null,
       profile
     };
-
+ 
     if(editingId) {
       const idx = articles.findIndex(a => a.id === editingId);
       if(idx >= 0) articles[idx] = article;
     } else {
       articles.unshift(article);
     }
-
+ 
     saveArticles(articles);
     clearEditor();
     renderArticles();
   }
-
+ 
   function clearEditor() {
     document.getElementById('titleInput').value = '';
     document.getElementById('contentInput').value = '';
@@ -393,7 +393,7 @@
     // Reset cover input
     document.getElementById('coverInput').value = '';
   }
-
+ 
   function editArticle(id) {
     const articles = getArticles();
     const a = articles.find(x => x.id === id);
@@ -413,7 +413,7 @@
     }
     window.scrollTo({top:0, behavior:'smooth'});
   }
-
+ 
   function deleteArticle(id) {
     if(!confirm('Delete this article?')) return;
     const articles = getArticles().filter(a => a.id !== id);
@@ -421,19 +421,19 @@
     renderArticles();
     showToast('Article deleted', 'error');
   }
-
+ 
   function renderArticles() {
     const articles = getArticles();
     const filtered = currentFilter === 'all' ? articles : articles.filter(a => a.status === currentFilter);
     const list = document.getElementById('articlesList');
     const count = document.getElementById('articleCount');
     count.textContent = `${articles.length} Article${articles.length !== 1 ? 's' : ''}`;
-
+ 
     if(filtered.length === 0) {
       list.innerHTML = `<div class="empty-state"><span>✍️</span><p>${currentFilter === 'draft' ? 'No drafts yet.' : currentFilter === 'published' ? 'No published articles.' : 'No articles yet.<br>Write your first one!'}</p></div>`;
       return;
     }
-
+ 
     list.innerHTML = filtered.map(a => `
       <div class="article-item">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.4rem;">
@@ -453,14 +453,14 @@
       </div>
     `).join('');
   }
-
+ 
   function filterArticles(filter, btn) {
     currentFilter = filter;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderArticles();
   }
-
+ 
   function readArticle(id) {
     const a = getArticles().find(x => x.id === id);
     if(!a) return;
@@ -474,17 +474,17 @@
     if(a.profile) { profileEl.src = a.profile; profileEl.style.display = 'block'; } else { profileEl.style.display = 'none'; }
     document.getElementById('readModal').classList.add('active');
   }
-
+ 
   function closeReadModal() { document.getElementById('readModal').classList.remove('active'); }
   document.getElementById('readModal').addEventListener('click', function(e){ if(e.target===this) closeReadModal(); });
-
+ 
   function showToast(msg, type='success') {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.className = `toast ${type} show`;
     setTimeout(() => t.classList.remove('show'), 3000);
   }
-
+ 
   // Init
   renderArticles();
 </script>
