@@ -6,253 +6,203 @@
 <title>Nikhil Dubey — Menace to Monk</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --ink: #1a1410;
-    --parchment: #f5f0e8;
-    --gold: #c9a84c;
-    --gold-light: #e8d5a3;
-    --rust: #8b3a2a;
-    --sage: #4a6741;
-    --cream: #faf7f2;
-    --muted: #6b5c4e;
-    --border: rgba(201,168,76,0.3);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--cream); color:var(--ink); font-family:'Cormorant Garamond',serif; overflow-x:hidden; }
-  body::before {
-    content:''; position:fixed; inset:0;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events:none; z-index:1000; opacity:0.4;
-  }
-
-  /* NAV */
-  nav {
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    display:flex; justify-content:space-between; align-items:center;
-    padding:1.2rem 4rem;
-    background:rgba(250,247,242,0.9); backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-  }
-  .nav-logo { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--ink); text-decoration:none; }
-  .nav-logo span { color:var(--gold); }
-  .nav-links { display:flex; gap:2rem; list-style:none; align-items:center; }
-  .nav-links a { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); text-decoration:none; transition:color 0.3s; }
-  .nav-links a:hover { color:var(--gold); }
-  .nav-btn {
-    font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase;
-    padding:0.5rem 1.2rem; background:var(--gold); color:var(--ink); border:none; cursor:pointer;
-    text-decoration:none; transition:all 0.3s; border-radius:2px;
-  }
-  .nav-btn:hover { background:var(--ink); color:var(--gold); }
-
-  /* HERO */
-  .hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; position:relative; overflow:hidden; }
-  .hero-left { display:flex; flex-direction:column; justify-content:center; padding:8rem 4rem 4rem 6rem; position:relative; }
-  .hero-tag { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; opacity:0; animation:fadeUp 0.8s 0.2s forwards; }
-  .hero-name { font-family:'Playfair Display',serif; font-size:clamp(3rem,5vw,5.5rem); font-weight:900; line-height:1.0; color:var(--ink); opacity:0; animation:fadeUp 0.8s 0.4s forwards; }
-  .hero-name em { font-style:italic; color:var(--gold); display:block; }
-  .hero-divider { width:60px; height:2px; background:linear-gradient(90deg,var(--gold),transparent); margin:2rem 0; opacity:0; animation:fadeUp 0.8s 0.6s forwards; }
-  .hero-tagline { font-size:1.35rem; font-weight:300; font-style:italic; color:var(--muted); line-height:1.6; max-width:400px; opacity:0; animation:fadeUp 0.8s 0.8s forwards; }
-  .hero-pills { display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:2.5rem; opacity:0; animation:fadeUp 0.8s 1s forwards; }
-  .pill { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.1em; padding:0.4rem 1rem; border:1px solid var(--border); border-radius:100px; color:var(--muted); background:rgba(201,168,76,0.06); text-transform:uppercase; transition:all 0.3s; cursor:default; }
-  .pill:hover { background:var(--gold); color:var(--cream); border-color:var(--gold); }
-
-  /* HERO BUTTONS */
-  .hero-cta { display:flex; gap:1rem; margin-top:3rem; flex-wrap:wrap; opacity:0; animation:fadeUp 0.8s 1.2s forwards; }
-  .btn-primary { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.9rem 2rem; background:var(--ink); color:var(--cream); border:none; cursor:pointer; text-decoration:none; transition:all 0.3s; display:inline-flex; align-items:center; gap:0.5rem; }
-  .btn-primary:hover { background:var(--gold); color:var(--ink); transform:translateY(-2px); box-shadow:0 8px 24px rgba(201,168,76,0.3); }
-  .btn-outline { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.9rem 2rem; background:transparent; color:var(--ink); border:1px solid var(--ink); cursor:pointer; text-decoration:none; transition:all 0.3s; display:inline-flex; align-items:center; gap:0.5rem; }
-  .btn-outline:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
-  .btn-gold { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; padding:0.9rem 2rem; background:var(--gold); color:var(--ink); border:none; cursor:pointer; text-decoration:none; transition:all 0.3s; display:inline-flex; align-items:center; gap:0.5rem; font-weight:500; }
-  .btn-gold:hover { background:var(--rust); color:var(--cream); transform:translateY(-2px); box-shadow:0 8px 24px rgba(139,58,42,0.3); }
-
-  .hero-right { position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .hero-right::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--gold-light) 0%,var(--parchment) 50%,#d4c5a0 100%); opacity:0.4; }
-
-  /* PROFILE PHOTO AREA */
-  .profile-photo-container {
-    position:relative; z-index:3;
-    width:260px; height:260px; border-radius:50%;
-    border:3px solid var(--gold);
-    overflow:hidden;
-    box-shadow:0 0 0 8px rgba(201,168,76,0.1), 0 20px 60px rgba(26,20,16,0.2);
-    opacity:0; animation:fadeIn 1s 0.8s forwards;
-    cursor:pointer;
-    transition:transform 0.3s, box-shadow 0.3s;
-  }
-  .profile-photo-container:hover { transform:scale(1.03); box-shadow:0 0 0 8px rgba(201,168,76,0.2), 0 24px 70px rgba(26,20,16,0.3); }
-  .profile-photo-container img { width:100%; height:100%; object-fit:cover; display:block; }
-  .profile-photo-placeholder {
-    width:100%; height:100%;
-    background:linear-gradient(135deg, #2a1f14, #1a1410);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8rem;
-  }
-  .profile-photo-placeholder span { font-size:3.5rem; }
-  .profile-photo-placeholder p { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:var(--gold); text-transform:uppercase; text-align:center; padding:0 1rem; }
-  .photo-upload-hint {
-    position:absolute; bottom:-40px; left:50%; transform:translateX(-50%);
-    font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; color:var(--gold);
-    white-space:nowrap; opacity:0; transition:opacity 0.3s;
-  }
-  .profile-photo-container:hover + .photo-upload-hint,
-  .profile-photo-container:hover ~ .photo-upload-hint { opacity:1; }
-
-  .hero-monogram { position:absolute; font-family:'Playfair Display',serif; font-size:30vw; font-weight:900; font-style:italic; color:rgba(201,168,76,0.06); line-height:1; user-select:none; z-index:1; }
-  .hero-quote { position:absolute; bottom:3rem; left:50%; transform:translateX(-50%); text-align:center; z-index:3; opacity:0; animation:fadeUp 0.8s 1.4s forwards; }
-  .hero-quote p { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-style:italic; color:var(--muted); white-space:nowrap; }
-  .hero-quote span { display:block; font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-top:0.4rem; }
-
-  /* QUICK ACTION STRIP */
-  .action-strip {
-    background:var(--ink);
-    display:flex; align-items:stretch;
-    border-top:1px solid rgba(201,168,76,0.15);
-  }
-  .action-item {
-    flex:1; padding:2rem 2.5rem;
-    display:flex; align-items:center; gap:1.2rem;
-    border-right:1px solid rgba(201,168,76,0.1);
-    text-decoration:none; color:var(--cream);
-    transition:background 0.3s;
-    cursor:pointer;
-  }
-  .action-item:last-child { border-right:none; }
-  .action-item:hover { background:rgba(201,168,76,0.08); }
-  .action-icon { font-size:1.8rem; flex-shrink:0; }
-  .action-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); }
-  .action-desc { font-size:0.95rem; color:rgba(250,247,242,0.55); margin-top:0.2rem; font-style:italic; }
-
-  /* SECTION BASE */
-  section { padding:7rem 6rem; position:relative; }
-  .section-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
-  .section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,3.5vw,3.2rem); font-weight:700; line-height:1.1; color:var(--ink); margin-bottom:1.5rem; }
-  .section-title em { font-style:italic; color:var(--gold); }
-
-  /* ABOUT */
-  .about { background:var(--ink); color:var(--cream); display:grid; grid-template-columns:1fr 1.5fr; gap:6rem; align-items:center; }
-  .about .section-label { color:var(--gold); }
-  .about .section-title { color:var(--cream); }
-  .about .section-title em { color:var(--gold); }
-  .about-text { font-size:1.15rem; line-height:1.9; color:rgba(250,247,242,0.75); font-weight:300; }
-  .about-text p+p { margin-top:1.2rem; }
-  .about-text strong { color:var(--gold-light); font-weight:600; }
-  .about-stats { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
-  .stat-card { border:1px solid rgba(201,168,76,0.2); padding:2rem; position:relative; overflow:hidden; transition:border-color 0.3s; }
-  .stat-card:hover { border-color:var(--gold); }
-  .stat-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--gold); transition:height 0.4s; }
-  .stat-card:hover::before { height:100%; }
-  .stat-number { font-family:'Playfair Display',serif; font-size:2.8rem; font-weight:900; color:var(--gold); line-height:1; }
-  .stat-label { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(250,247,242,0.5); margin-top:0.5rem; }
-
-  /* ARTICLES PREVIEW */
-  .articles-section { background:var(--parchment); }
-  .articles-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:3rem; }
-  .article-card {
-    background:var(--cream); border:1px solid var(--border);
-    padding:2rem; position:relative; overflow:hidden;
-    transition:all 0.3s; cursor:pointer;
-  }
-  .article-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(26,20,16,0.1); border-color:var(--gold); }
-  .article-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--gold); transform:scaleX(0); transition:transform 0.3s; }
-  .article-card:hover::after { transform:scaleX(1); }
-  .article-tag { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
-  .article-title { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--ink); line-height:1.3; margin-bottom:0.8rem; }
-  .article-excerpt { font-size:0.95rem; color:var(--muted); line-height:1.7; font-style:italic; }
-  .article-meta { display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border); }
-  .article-date { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--muted); letter-spacing:0.1em; }
-  .article-read { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--gold); letter-spacing:0.1em; text-transform:uppercase; }
-  .articles-empty { grid-column:1/-1; text-align:center; padding:4rem; border:1px dashed var(--border); }
-  .articles-empty p { font-style:italic; color:var(--muted); font-size:1.1rem; }
-  .articles-cta { display:flex; justify-content:center; margin-top:3rem; }
-
-  /* DUAL IDENTITY */
-  .dual { display:grid; grid-template-columns:1fr 1fr; gap:0; padding:0; }
-  .dual-card { padding:6rem; position:relative; overflow:hidden; transition:all 0.4s; }
-  .dual-card:first-child { background:#1a2a1a; color:var(--cream); }
-  .dual-card:last-child { background:#2a1a0e; color:var(--cream); }
-  .dual-card:hover { transform:scale(1.02); z-index:2; }
-  .dual-icon { font-size:3.5rem; margin-bottom:2rem; display:block; }
-  .dual-title { font-family:'Playfair Display',serif; font-size:2rem; font-weight:700; font-style:italic; color:var(--gold); margin-bottom:1rem; }
-  .dual-sub { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(250,247,242,0.5); margin-bottom:1.5rem; }
-  .dual-desc { font-size:1.05rem; line-height:1.8; color:rgba(250,247,242,0.7); font-weight:300; }
-  .dual-skills { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:2rem; }
-  .dual-skill { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; padding:0.35rem 0.8rem; border:1px solid rgba(201,168,76,0.3); color:var(--gold-light); text-transform:uppercase; }
-
-  /* EDUCATION */
-  .education { background:var(--cream); }
-  .edu-timeline { position:relative; margin-top:4rem; padding-left:3rem; }
-  .edu-timeline::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background:linear-gradient(180deg,var(--gold),transparent); }
-  .edu-item { position:relative; padding:0 0 4rem 3rem; opacity:0; transform:translateX(-20px); transition:all 0.6s; }
-  .edu-item.visible { opacity:1; transform:translateX(0); }
-  .edu-item::before { content:''; position:absolute; left:-4px; top:8px; width:9px; height:9px; background:var(--gold); border-radius:50%; box-shadow:0 0 0 3px var(--cream),0 0 0 4px var(--gold); }
-  .edu-year { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.2em; color:var(--gold); text-transform:uppercase; margin-bottom:0.5rem; }
-  .edu-degree { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:var(--ink); margin-bottom:0.3rem; }
-  .edu-school { font-size:1.05rem; font-style:italic; color:var(--muted); }
-
-  /* PHILOSOPHY */
-  .philosophy { background:var(--gold); text-align:center; padding:8rem 6rem; }
-  .philosophy-quote { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3vw,3rem); font-weight:400; font-style:italic; color:var(--ink); line-height:1.4; max-width:900px; margin:0 auto 2rem; }
-  .philosophy-attr { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(26,20,16,0.6); }
-
-  /* CONTACT */
-  .contact { background:var(--ink); color:var(--cream); text-align:center; padding:8rem 6rem; }
-  .contact .section-label { color:var(--gold); }
-  .contact .section-title { color:var(--cream); }
-  .contact .section-title em { color:var(--gold); }
-  .contact-sub { font-size:1.15rem; color:rgba(250,247,242,0.6); font-style:italic; margin-bottom:3rem; font-weight:300; }
-  .contact-links { display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; }
-  .contact-link { display:flex; align-items:center; gap:0.8rem; font-family:'JetBrains Mono',monospace; font-size:0.75rem; letter-spacing:0.1em; color:rgba(250,247,242,0.7); text-decoration:none; border:1px solid rgba(201,168,76,0.2); padding:1rem 1.8rem; transition:all 0.3s; }
-  .contact-link:hover { color:var(--gold); border-color:var(--gold); background:rgba(201,168,76,0.05); }
-
-  /* FOOTER */
-  footer { background:#0e0c0a; padding:2rem 6rem; display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(201,168,76,0.1); }
-  .footer-text { font-family:'JetBrains Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; color:rgba(250,247,242,0.3); text-transform:uppercase; }
-  .footer-brand { font-family:'Playfair Display',serif; font-size:1rem; font-style:italic; color:var(--gold); }
-
-  /* PHOTO MODAL */
-  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:500; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; backdrop-filter:blur(8px); }
-  .modal-overlay.active { opacity:1; pointer-events:all; }
-  .modal { background:var(--cream); padding:3rem; max-width:480px; width:90%; position:relative; animation:modalIn 0.3s ease; }
-  .modal-title { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--ink); margin-bottom:0.5rem; }
-  .modal-sub { font-family:'JetBrains Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; color:var(--gold); text-transform:uppercase; margin-bottom:2rem; }
-  .modal-close { position:absolute; top:1rem; right:1.5rem; font-size:1.5rem; cursor:pointer; color:var(--muted); background:none; border:none; }
-  .modal-close:hover { color:var(--ink); }
-  .upload-area { border:2px dashed var(--border); padding:3rem; text-align:center; cursor:pointer; transition:all 0.3s; position:relative; }
-  .upload-area:hover { border-color:var(--gold); background:rgba(201,168,76,0.03); }
-  .upload-area input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
-  .upload-icon { font-size:2.5rem; margin-bottom:1rem; display:block; }
-  .upload-text { font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--muted); font-style:italic; }
-  .upload-hint { font-family:'JetBrains Mono',monospace; font-size:0.6rem; color:var(--gold); letter-spacing:0.1em; margin-top:0.5rem; text-transform:uppercase; }
-  .modal-actions { display:flex; gap:1rem; margin-top:2rem; }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-  @keyframes modalIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-
-  /* RESPONSIVE */
-  @media(max-width:900px){
-    nav { padding:1rem 1.5rem; }
-    .nav-links { display:none; }
-    .hero { grid-template-columns:1fr; min-height:auto; }
-    .hero-left { padding:7rem 2rem 3rem; }
-    .hero-right { height:300px; }
-    .about { grid-template-columns:1fr; gap:3rem; padding:4rem 2rem; }
-    .dual { grid-template-columns:1fr; }
-    .dual-card { padding:3rem 2rem; }
-    section { padding:4rem 2rem; }
-    .articles-grid { grid-template-columns:1fr; }
-    .action-strip { flex-direction:column; }
-    .action-item { border-right:none; border-bottom:1px solid rgba(201,168,76,0.1); }
-    footer { flex-direction:column; gap:1rem; text-align:center; padding:2rem; }
-  }
+:root{--ink:#1a1410;--parchment:#f5f0e8;--gold:#c9a84c;--gold-l:#e8d5a3;--rust:#8b3a2a;--cream:#faf7f2;--muted:#6b5c4e;--border:rgba(201,168,76,0.25);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--ink);font-family:'Cormorant Garamond',serif;overflow-x:hidden;cursor:none;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9990;opacity:0.5;}
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.12s;}
+#cring{position:fixed;width:36px;height:36px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s,top 0.12s,opacity 0.3s;opacity:0.5;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1rem 4rem;background:rgba(250,247,242,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:all 0.4s;}
+nav.scrolled{padding:0.7rem 4rem;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--ink);text-decoration:none;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s;}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);}
+.nav-cta{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.55rem 1.4rem;background:var(--ink);color:var(--cream);text-decoration:none;transition:all 0.3s;border:1px solid var(--ink);}
+.nav-cta:hover{background:var(--gold);border-color:var(--gold);color:var(--ink);}
+.hero{min-height:100vh;display:grid;grid-template-columns:58% 42%;position:relative;overflow:hidden;}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:9rem 4rem 5rem 6rem;position:relative;z-index:2;}
+.hero-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;opacity:0;animation:fadeUp 0.8s 0.1s forwards;}
+.eyebrow-line{width:30px;height:1px;background:var(--gold);}
+.eyebrow-text{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,6vw,6.5rem);font-weight:900;line-height:0.95;color:var(--ink);opacity:0;animation:fadeUp 0.9s 0.25s forwards;}
+.hero-name em{display:block;font-style:italic;color:var(--gold);}
+.hero-divider{width:0;height:1px;background:linear-gradient(90deg,var(--gold),rgba(201,168,76,0));margin:2.2rem 0;animation:expandLine 1s 0.9s forwards;}
+.hero-tagline{font-size:1.25rem;font-weight:300;font-style:italic;color:var(--muted);line-height:1.65;max-width:420px;opacity:0;animation:fadeUp 0.8s 0.7s forwards;}
+.hero-tagline strong{color:var(--ink);font-weight:600;font-style:normal;}
+.pill-row{display:flex;flex-wrap:wrap;gap:0.55rem;margin-top:2.5rem;opacity:0;animation:fadeUp 0.8s 0.9s forwards;}
+.pill{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;padding:0.4rem 1.1rem;border:1px solid var(--border);border-radius:100px;color:var(--muted);background:rgba(201,168,76,0.04);text-transform:uppercase;transition:all 0.35s;cursor:default;}
+.pill:hover{background:var(--gold);color:var(--ink);border-color:var(--gold);transform:translateY(-2px);}
+.hero-cta{display:flex;gap:1rem;margin-top:3rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 1.1s forwards;}
+.btn{font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.95rem 2.2rem;text-decoration:none;transition:all 0.35s;display:inline-flex;align-items:center;gap:0.6rem;border:none;cursor:pointer;}
+.btn-dark{background:var(--ink);color:var(--cream);}
+.btn-dark:hover{background:var(--gold);color:var(--ink);transform:translateY(-3px);box-shadow:0 12px 30px rgba(201,168,76,0.25);}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid rgba(26,20,16,0.3);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px);}
+.btn-gold{background:var(--gold);color:var(--ink);}
+.btn-gold:hover{background:var(--rust);color:var(--cream);transform:translateY(-3px);box-shadow:0 12px 30px rgba(139,58,42,0.2);}
+.scroll-hint{position:absolute;bottom:2.5rem;left:6rem;display:flex;align-items:center;gap:1rem;opacity:0;animation:fadeIn 1s 2s forwards;}
+.scroll-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+.scroll-label{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);}
+.hero-right{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.hero-bg-letter{position:absolute;font-family:'Playfair Display',serif;font-size:30vw;font-weight:900;font-style:italic;color:rgba(201,168,76,0.06);line-height:1;user-select:none;z-index:0;right:-5%;}
+.hero-visual{position:relative;z-index:2;text-align:center;}
+.profile-ring{width:280px;height:280px;border-radius:50%;border:1px solid var(--border);padding:6px;position:relative;cursor:pointer;transition:transform 0.4s;opacity:0;animation:fadeIn 1s 0.6s forwards;}
+.profile-ring:hover{transform:scale(1.04);}
+.spin-border{position:absolute;inset:-2px;border-radius:50%;border:2px solid transparent;border-top-color:var(--gold);border-right-color:rgba(201,168,76,0.3);animation:spin 5s linear infinite;}
+.profile-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#2a1f14,#1a1410);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;}
+.profile-inner img{width:100%;height:100%;object-fit:cover;display:none;}
+.ph-icon{font-size:3rem;opacity:0.4;}
+.ph-text{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;text-align:center;padding:0 1.5rem;opacity:0.8;}
+.upload-badge{position:absolute;bottom:10px;right:10px;width:40px;height:40px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:3px solid var(--cream);transition:transform 0.3s;}
+.profile-ring:hover .upload-badge{transform:scale(1.2);}
+.menace-badge{margin-top:1.8rem;opacity:0;animation:fadeUp 0.8s 1.3s forwards;}
+.menace-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;color:var(--muted);}
+.menace-text span{color:var(--gold);}
+.menace-sub{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(107,92,78,0.5);margin-top:0.4rem;}
+.action-strip{background:var(--ink);display:grid;grid-template-columns:repeat(4,1fr);}
+.action-tile{padding:2rem 2.2rem;border-right:1px solid rgba(201,168,76,0.08);text-decoration:none;color:var(--cream);display:flex;align-items:flex-start;gap:1rem;transition:background 0.3s;cursor:pointer;position:relative;overflow:hidden;}
+.action-tile::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width 0.4s;}
+.action-tile:hover::after{width:100%;}
+.action-tile:hover{background:rgba(201,168,76,0.07);}
+.action-tile:last-child{border-right:none;}
+.tile-icon{font-size:1.4rem;flex-shrink:0;margin-top:0.1rem;}
+.tile-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
+.tile-desc{font-size:0.9rem;color:rgba(250,247,242,0.4);font-style:italic;}
+section{padding:7rem 6rem;position:relative;}
+.s-label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;}
+.s-label::before{content:'';width:20px;height:1px;background:var(--gold);}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,3.5vw,3.4rem);font-weight:700;line-height:1.05;margin-bottom:1.5rem;}
+.s-title em{font-style:italic;color:var(--gold);}
+.about{background:var(--ink);color:var(--cream);}
+.about-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:7rem;align-items:center;}
+.about .s-title{color:var(--cream);}
+.about-body{font-size:1.12rem;line-height:1.95;color:rgba(250,247,242,0.7);font-weight:300;}
+.about-body p+p{margin-top:1.3rem;}
+.about-body strong{color:var(--gold-l);font-weight:600;}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem;}
+.stat{border:1px solid rgba(201,168,76,0.15);padding:1.8rem;transition:all 0.35s;}
+.stat:hover{border-color:rgba(201,168,76,0.5);transform:translateY(-4px);background:rgba(201,168,76,0.03);}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;color:var(--gold);line-height:1;}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(250,247,242,0.4);margin-top:0.5rem;}
+.articles-section{background:var(--parchment);}
+.arts-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;}
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;}
+.art-card{background:var(--cream);border:1px solid var(--border);padding:2.2rem;position:relative;overflow:hidden;transition:all 0.4s;cursor:pointer;}
+.art-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold);transition:width 0.4s;}
+.art-card:hover::before{width:3px;}
+.art-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(26,20,16,0.1);border-color:rgba(201,168,76,0.5);}
+.art-tag{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+.art-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:0.8rem;}
+.art-excerpt{font-size:0.95rem;color:var(--muted);line-height:1.7;font-style:italic;}
+.art-footer{display:flex;justify-content:space-between;align-items:center;margin-top:1.8rem;padding-top:1rem;border-top:1px solid var(--border);}
+.art-date{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--muted);}
+.art-read{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;}
+.empty-arts{grid-column:1/-1;border:1px dashed var(--border);padding:5rem;text-align:center;}
+.empty-arts p{font-style:italic;color:var(--muted);font-size:1.1rem;margin-bottom:2rem;}
+.dual{display:grid;grid-template-columns:1fr 1fr;}
+.dual-card{padding:6rem;position:relative;overflow:hidden;transition:all 0.5s;}
+.dual-card:first-child{background:#142014;}
+.dual-card:last-child{background:#1e1208;}
+.dual-card:hover{transform:scale(1.015);z-index:2;}
+.dual-num{font-family:'Playfair Display',serif;font-size:8rem;font-weight:900;font-style:italic;color:rgba(201,168,76,0.06);position:absolute;top:-1rem;right:2rem;line-height:1;user-select:none;}
+.dual-icon-wrap{width:56px;height:56px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:2rem;}
+.dual-sub{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-bottom:0.8rem;}
+.dual-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;font-style:italic;color:var(--gold);margin-bottom:1.2rem;}
+.dual-desc{font-size:1.05rem;line-height:1.85;color:rgba(250,247,242,0.6);font-weight:300;}
+.dual-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2.5rem;}
+.dual-tag{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.08em;padding:0.35rem 0.8rem;border:1px solid rgba(201,168,76,0.2);color:rgba(201,168,76,0.7);text-transform:uppercase;transition:all 0.3s;cursor:default;}
+.dual-tag:hover{background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.4);}
+.education{background:var(--cream);}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;margin-top:4rem;align-items:start;}
+.edu-timeline{position:relative;padding-left:2.5rem;}
+.edu-timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--gold),rgba(201,168,76,0));}
+.edu-item{position:relative;padding-bottom:3.5rem;opacity:0;transform:translateX(-16px);transition:all 0.6s;}
+.edu-item.visible{opacity:1;transform:none;}
+.edu-item:last-child{padding-bottom:0;}
+.edu-dot{position:absolute;left:-2.84rem;top:6px;width:8px;height:8px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 3px var(--cream),0 0 0 4px var(--gold);}
+.edu-year{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem;}
+.edu-deg{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--ink);margin-bottom:0.3rem;}
+.edu-school{font-size:1rem;font-style:italic;color:var(--muted);}
+.edu-cards{display:flex;flex-direction:column;gap:1.5rem;}
+.edu-card{background:var(--ink);padding:2.5rem;border-left:3px solid var(--gold);transition:transform 0.3s;opacity:0;transform:translateX(16px);transition:all 0.6s;}
+.edu-card.visible{opacity:1;transform:none;}
+.edu-card:hover{transform:translateX(6px);}
+.edu-card-label{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;margin-bottom:0.6rem;}
+.edu-card-text{font-size:1rem;color:rgba(250,247,242,0.65);line-height:1.7;font-style:italic;}
+.philosophy{background:var(--gold);padding:7rem 6rem;text-align:center;position:relative;overflow:hidden;}
+.philosophy::before{content:'"';position:absolute;top:-4rem;left:2rem;font-family:'Playfair Display',serif;font-size:32rem;font-weight:900;color:rgba(26,20,16,0.04);line-height:1;pointer-events:none;}
+.phil-quote{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,2.8vw,2.7rem);font-weight:400;font-style:italic;color:var(--ink);line-height:1.45;max-width:880px;margin:0 auto 2rem;position:relative;z-index:1;}
+.phil-attr{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(26,20,16,0.55);}
+.contact{background:var(--ink);color:var(--cream);text-align:center;padding:8rem 6rem;}
+.contact .s-label{justify-content:center;}
+.contact .s-title{color:var(--cream);}
+.contact .s-title em{color:var(--gold);}
+.contact-sub{font-size:1.12rem;color:rgba(250,247,242,0.5);font-style:italic;margin-bottom:3.5rem;}
+.contact-row{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:3rem;}
+.contact-card{display:flex;align-items:center;gap:1rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;color:rgba(250,247,242,0.65);text-decoration:none;border:1px solid rgba(201,168,76,0.15);padding:1.2rem 2rem;transition:all 0.35s;}
+.contact-card:hover{border-color:rgba(201,168,76,0.5);color:var(--gold);transform:translateY(-4px);}
+.contact-card-icon{font-size:1.1rem;opacity:0.7;}
+footer{background:#0d0b09;padding:2rem 6rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,76,0.08);}
+.footer-l{font-family:'JetBrains Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;color:rgba(250,247,242,0.25);text-transform:uppercase;}
+.footer-c{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--gold);}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s;backdrop-filter:blur(10px);}
+.modal-bg.open{opacity:1;pointer-events:all;}
+.modal{background:var(--cream);padding:3rem;max-width:460px;width:90%;position:relative;transform:translateY(20px);transition:transform 0.35s;}
+.modal-bg.open .modal{transform:translateY(0);}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:0.3rem;}
+.modal-sub{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;}
+.modal-x{position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);transition:color 0.2s;}
+.modal-x:hover{color:var(--ink);}
+.drop-zone{border:2px dashed var(--border);padding:3rem;text-align:center;position:relative;cursor:pointer;transition:all 0.3s;}
+.drop-zone:hover{border-color:var(--gold);background:rgba(201,168,76,0.03);}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.drop-icon{font-size:2.5rem;margin-bottom:1rem;display:block;}
+.drop-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--muted);font-style:italic;}
+.drop-hint{font-family:'JetBrains Mono',monospace;font-size:0.58rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.5rem;}
+.modal-btns{display:flex;gap:1rem;margin-top:2rem;}
+.mbtn{font-family:'JetBrains Mono',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.85rem 1.5rem;cursor:pointer;transition:all 0.3s;border:1px solid var(--border);background:transparent;color:var(--muted);}
+.mbtn:hover{border-color:var(--ink);color:var(--ink);}
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:var(--cream);padding:1rem 2rem;font-family:'JetBrains Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;z-index:9995;transform:translateY(80px);opacity:0;transition:all 0.4s;border-left:3px solid var(--gold);}
+.toast.show{transform:translateY(0);opacity:1;}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s,transform 0.7s;}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-1{transition-delay:0.1s;}
+.reveal-2{transition-delay:0.2s;}
+.reveal-3{transition-delay:0.3s;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes expandLine{from{width:0}to{width:80px}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero{grid-template-columns:1fr;min-height:auto;}
+  .hero-left{padding:7rem 2rem 3rem;}
+  .hero-right{height:320px;}
+  .about-grid,.edu-grid,.dual{grid-template-columns:1fr;}
+  .dual-card{padding:3rem 2rem;}
+  section{padding:4rem 2rem;}
+  .articles-grid{grid-template-columns:1fr;}
+  .contact-row{flex-direction:column;align-items:center;}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem;}
+  .action-strip{grid-template-columns:1fr 1fr;}
+  .arts-header{flex-direction:column;align-items:flex-start;gap:1.5rem;}
+  .scroll-hint{display:none;}
+}
 </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
+ 
+<div id="cursor"></div>
+<div id="cring"></div>
+ 
+<nav id="nav">
   <a href="index.html" class="nav-logo">N<span>.</span>Dubey</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
@@ -260,271 +210,258 @@
     <li><a href="#identity">Identity</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="articles.html" class="nav-btn">✍ Write</a></li>
+    <li><a href="articles.html" class="nav-cta">✍ Write</a></li>
   </ul>
 </nav>
-
-<!-- HERO -->
+ 
 <section class="hero">
   <div class="hero-left">
-    <p class="hero-tag">✦ Ranchi, Jharkhand · India</p>
+    <div class="hero-eyebrow"><div class="eyebrow-line"></div><span class="eyebrow-text">Ranchi, Jharkhand · India</span></div>
     <h1 class="hero-name">Nikhil<br><em>Dubey</em></h1>
     <div class="hero-divider"></div>
-    <p class="hero-tagline">The most interesting ideas live at the intersection of disciplines.</p>
-    <div class="hero-pills">
-      <span class="pill">MCA Candidate</span>
-      <span class="pill">UPSC Aspirant</span>
-      <span class="pill">Python · ML</span>
-      <span class="pill">Sociology</span>
-      <span class="pill">Avid Reader</span>
+    <p class="hero-tagline">The most interesting ideas live at the <strong>intersection of disciplines</strong> — where code meets conscience, and algorithms meet society.</p>
+    <div class="pill-row">
+      <a href="mca.html" class="pill" style="text-decoration:none;">MCA Candidate</a>
+      <a href="upsc.html" class="pill" style="text-decoration:none;">UPSC Aspirant</a>
+      <a href="tech.html" class="pill" style="text-decoration:none;">Python · ML</a>
+      <a href="sociology.html" class="pill" style="text-decoration:none;">Sociology</a>
+      <a href="articles.html" class="pill" style="text-decoration:none;">Avid Reader</a>
+      <a href="monk.html" class="pill" style="text-decoration:none;">Menace → Monk</a>
     </div>
     <div class="hero-cta">
-      <a href="#about" class="btn-primary">↓ Explore</a>
-      <a href="articles.html" class="btn-gold">✍ My Articles</a>
-      <a href="#contact" class="btn-outline">✉ Contact</a>
+      <a href="#about" class="btn btn-dark">↓ Explore</a>
+      <a href="articles.html" class="btn btn-gold">✍ Articles</a>
+      <a href="#contact" class="btn btn-ghost">✉ Contact</a>
     </div>
+    <div class="scroll-hint"><div class="scroll-dot"></div><span class="scroll-label">Scroll to explore</span></div>
   </div>
   <div class="hero-right">
-    <div class="hero-monogram">N</div>
-    <div class="profile-photo-container" id="profilePhotoContainer" onclick="openPhotoModal()">
-      <div class="profile-photo-placeholder" id="photoPlaceholder">
-        <span>👤</span>
-        <p>Click to upload your photo</p>
+    <div class="hero-bg-letter">N</div>
+    <div class="hero-visual">
+      <div class="profile-ring" id="profileRing" onclick="openModal()">
+        <div class="spin-border"></div>
+        <div class="profile-inner" id="profileInner">
+          <div class="ph-icon" id="phIcon">👤</div>
+          <div class="ph-text" id="phText">Click to upload photo</div>
+          <img id="profileImg" src="" alt="Nikhil Dubey">
+        </div>
+        <div class="upload-badge">📷</div>
       </div>
-      <img id="profileImg" src="" alt="Nikhil Dubey" style="display:none;">
-    </div>
-    <div class="hero-quote">
-      <p>"Menace to Monk"</p>
-      <span>A transformation story</span>
+      <div class="menace-badge">
+        <div class="menace-text">"<span>Menace</span> to <span>Monk</span>"</div>
+        <div class="menace-sub">A transformation in progress</div>
+      </div>
     </div>
   </div>
 </section>
-
-<!-- QUICK ACTION STRIP -->
+ 
 <div class="action-strip">
-  <a href="articles.html" class="action-item">
-    <div class="action-icon">✍️</div>
-    <div>
-      <div class="action-label">Write Article</div>
-      <div class="action-desc">Share your thoughts on UPSC, tech & life</div>
-    </div>
-  </a>
-  <div class="action-item" onclick="openPhotoModal()">
-    <div class="action-icon">📸</div>
-    <div>
-      <div class="action-label">Upload Photo</div>
-      <div class="action-desc">Add your profile picture</div>
-    </div>
-  </div>
-  <a href="#articles" class="action-item">
-    <div class="action-icon">📚</div>
-    <div>
-      <div class="action-label">Read Articles</div>
-      <div class="action-desc">Browse your published writings</div>
-    </div>
-  </a>
-  <a href="https://www.linkedin.com/in/nikhildubey01" target="_blank" class="action-item">
-    <div class="action-icon">🔗</div>
-    <div>
-      <div class="action-label">LinkedIn</div>
-      <div class="action-desc">Connect professionally</div>
-    </div>
-  </a>
+  <a href="articles.html" class="action-tile"><div class="tile-icon">✍️</div><div><div class="tile-label">Write Article</div><div class="tile-desc">Share thoughts on UPSC & tech</div></div></a>
+  <div class="action-tile" onclick="openModal()"><div class="tile-icon">📸</div><div><div class="tile-label">Upload Photo</div><div class="tile-desc">Add your profile picture</div></div></div>
+  <a href="#articles" class="action-tile"><div class="tile-icon">📚</div><div><div class="tile-label">My Articles</div><div class="tile-desc">Browse published writings</div></div></a>
+  <a href="https://www.linkedin.com/in/nikhildubey01" target="_blank" class="action-tile"><div class="tile-icon">🔗</div><div><div class="tile-label">LinkedIn</div><div class="tile-desc">Connect professionally</div></div></a>
 </div>
-
-<!-- ABOUT -->
+ 
 <section class="about" id="about">
-  <div>
-    <p class="section-label">✦ Who I Am</p>
-    <h2 class="section-title">A mind that<br>refuses to<br><em>stay in one lane</em></h2>
-  </div>
-  <div>
-    <div class="about-text">
-      <p>I am a <strong>computer science enthusiast</strong> with a solid foundation in programming, data structures, networking, and operating systems — currently pursuing my MCA at Marwari College, Ranchi.</p>
-      <p>Beyond the terminal, I have cultivated a working knowledge of <strong>UPSC-oriented subjects</strong> — particularly Sociology and General Studies — which has sharpened my ability to think critically about society, governance, and human systems.</p>
-      <p>Reading <strong>literary fiction</strong> strengthens my analytical reasoning. I believe technology always operates within a human context, and the best solutions are built by people who think both systemically and empathetically.</p>
+  <div class="about-grid">
+    <div>
+      <div class="s-label">Who I Am</div>
+      <h2 class="s-title">A mind that refuses<br>to <em>stay in one lane</em></h2>
+      <a href="#identity" class="btn btn-ghost" style="margin-top:2rem;display:inline-flex;font-size:0.62rem;padding:0.75rem 1.6rem;border-color:rgba(201,168,76,0.3);color:var(--gold-l);">Explore my identity →</a>
     </div>
-    <div class="about-stats" style="margin-top:3rem;">
-      <div class="stat-card"><div class="stat-number">MCA</div><div class="stat-label">Computer Science<br>Marwari College</div></div>
-      <div class="stat-card"><div class="stat-number">IAS</div><div class="stat-label">Aspiring Civil<br>Servant · UPSC</div></div>
-      <div class="stat-card"><div class="stat-number">ML</div><div class="stat-label">Machine Learning<br>& Python Dev</div></div>
-      <div class="stat-card"><div class="stat-number">📚</div><div class="stat-label">Avid Reader<br>Literary Fiction</div></div>
+    <div>
+      <div class="about-body">
+        <p>I am a <strong>computer science enthusiast</strong> with a solid foundation in programming, data structures, networking, and operating systems — currently pursuing my MCA at Marwari College, Ranchi.</p>
+        <p>Beyond the terminal, I have cultivated a working knowledge of <strong>UPSC-oriented subjects</strong> — particularly Sociology and General Studies — sharpening my ability to think critically about society, governance, and human systems.</p>
+        <p>Reading <strong>literary fiction</strong> strengthens my analytical reasoning. I believe the best solutions are built by people who can think both systemically and empathetically.</p>
+      </div>
+      <div class="stats-grid">
+        <div class="stat reveal"><div class="stat-n">MCA</div><div class="stat-l">Computer Science<br>Marwari College</div></div>
+        <div class="stat reveal reveal-1"><div class="stat-n">IAS</div><div class="stat-l">UPSC Aspirant<br>Civil Services</div></div>
+        <div class="stat reveal reveal-2"><div class="stat-n">ML</div><div class="stat-l">Machine Learning<br>& Python</div></div>
+        <div class="stat reveal reveal-3"><div class="stat-n">📖</div><div class="stat-l">Avid Reader<br>Literary Fiction</div></div>
+      </div>
     </div>
   </div>
 </section>
-
-<!-- ARTICLES PREVIEW -->
+ 
 <section class="articles-section" id="articles">
-  <p class="section-label">✦ Published Writings</p>
-  <h2 class="section-title">Articles &<br><em>Reflections</em></h2>
-  <div class="articles-grid" id="articlesGrid">
-    <div class="articles-empty">
-      <p>Your articles will appear here once published.</p>
-      <br>
-      <a href="articles.html" class="btn-gold" style="display:inline-flex;margin-top:1rem;">✍ Write Your First Article</a>
-    </div>
+  <div class="arts-header">
+    <div><div class="s-label">Published Writings</div><h2 class="s-title">Articles &<br><em>Reflections</em></h2></div>
+    <a href="articles.html" class="btn btn-dark">✍ Write New Article</a>
   </div>
-  <div class="articles-cta" id="articlesCta" style="display:none;">
-    <a href="articles.html" class="btn-primary">✍ Write New Article</a>
+  <div class="articles-grid" id="articlesGrid">
+    <div class="empty-arts"><p>Your articles will appear here once published.</p><a href="articles.html" class="btn btn-gold">✍ Write Your First Article</a></div>
   </div>
 </section>
-
-<!-- DUAL IDENTITY -->
+ 
 <div class="dual" id="identity">
   <div class="dual-card">
-    <span class="dual-icon">💻</span>
+    <div class="dual-num">01</div>
+    <div class="dual-icon-wrap">💻</div>
     <div class="dual-sub">Technical Identity</div>
     <div class="dual-title">The Engineer</div>
-    <p class="dual-desc">Grounded in the core pillars of computer science — algorithms, networking, OS, and Machine Learning. Building intelligence one model at a time.</p>
-    <div class="dual-skills">
-      <span class="dual-skill">Python</span><span class="dual-skill">C</span><span class="dual-skill">Machine Learning</span><span class="dual-skill">Algorithms</span><span class="dual-skill">DSA</span><span class="dual-skill">Networking</span><span class="dual-skill">OS</span>
-    </div>
+    <p class="dual-desc">Grounded in the core pillars of computer science — programming paradigms, algorithms, networking protocols, and operating systems. Building expertise in Machine Learning and AI.</p>
+    <div class="dual-tags"><span class="dual-tag">Python</span><span class="dual-tag">C</span><span class="dual-tag">Machine Learning</span><span class="dual-tag">Algorithms</span><span class="dual-tag">DSA</span><span class="dual-tag">Networking</span><span class="dual-tag">OS</span></div>
   </div>
   <div class="dual-card">
-    <span class="dual-icon">🏛️</span>
+    <div class="dual-num">02</div>
+    <div class="dual-icon-wrap">🏛️</div>
     <div class="dual-sub">Civil Service Identity</div>
     <div class="dual-title">The Aspirant</div>
-    <p class="dual-desc">Deeply invested in UPSC preparation — Sociology and General Studies. Analyzing social structures, governance frameworks, and human systems. Ranchi → LBSNAA.</p>
-    <div class="dual-skills">
-      <span class="dual-skill">Sociology</span><span class="dual-skill">General Studies</span><span class="dual-skill">Polity</span><span class="dual-skill">History</span><span class="dual-skill">Governance</span><span class="dual-skill">Public Policy</span>
-    </div>
+    <p class="dual-desc">Deeply invested in UPSC preparation — Sociology and General Studies — studying social structures, governance frameworks, and human systems. From Ranchi, headed to LBSNAA.</p>
+    <div class="dual-tags"><span class="dual-tag">Sociology</span><span class="dual-tag">General Studies</span><span class="dual-tag">Polity</span><span class="dual-tag">History</span><span class="dual-tag">Governance</span><span class="dual-tag">Public Policy</span></div>
   </div>
 </div>
-
-<!-- EDUCATION -->
+ 
 <section class="education" id="education">
-  <p class="section-label">✦ Academic Journey</p>
-  <h2 class="section-title">Education &<br><em>Formation</em></h2>
-  <div class="edu-timeline">
-    <div class="edu-item"><div class="edu-year">May 2024 — June 2026</div><div class="edu-degree">Master of Computer Applications</div><div class="edu-school">Marwari College, Ranchi · Computer Science</div></div>
-    <div class="edu-item"><div class="edu-year">May 2021 — May 2024</div><div class="edu-degree">Bachelor of Applied Science</div><div class="edu-school">Gossner College, Ranchi · Information Technology</div></div>
-    <div class="edu-item"><div class="edu-year">July 2019 — July 2021</div><div class="edu-degree">Intermediate · Class XII</div><div class="edu-school">St. Xavier's College, Ranchi · Science</div></div>
-  </div>
-</section>
-
-<!-- PHILOSOPHY -->
-<section class="philosophy">
-  <p class="philosophy-quote">"The best solutions are built by people who can think systemically and empathetically — who can write clean code and communicate it clearly, who can solve a problem and ask whether it's the right problem to solve."</p>
-  <p class="philosophy-attr">— Nikhil Dubey · Personal Philosophy</p>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <p class="section-label">✦ Let's Connect</p>
-  <h2 class="section-title">Reach Out &<br><em>Say Hello</em></h2>
-  <p class="contact-sub">Always open to conversations about technology, civil services, books, or ideas.</p>
-  <div class="contact-links">
-    <a href="mailto:nikhildubey056@gmail.com" class="contact-link"><span>✉</span> nikhildubey056@gmail.com</a>
-    <a href="https://www.linkedin.com/in/nikhildubey01" target="_blank" class="contact-link"><span>in</span> linkedin.com/in/nikhildubey01</a>
-    <a href="#" class="contact-link"><span>📍</span> Ranchi, Jharkhand, India</a>
-  </div>
-</section>
-
-<footer>
-  <span class="footer-text">© 2026 Nikhil Dubey</span>
-  <span class="footer-brand">Menace to Monk</span>
-  <span class="footer-text">Built with purpose</span>
-</footer>
-
-<!-- PHOTO MODAL -->
-<div class="modal-overlay" id="photoModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closePhotoModal()">✕</button>
-    <div class="modal-title">Upload Photo</div>
-    <div class="modal-sub">✦ Profile Picture</div>
-    <div class="upload-area" id="uploadArea">
-      <input type="file" accept="image/*" id="photoInput" onchange="handlePhotoUpload(event)">
-      <span class="upload-icon">📸</span>
-      <p class="upload-text">Drag & drop your photo here</p>
-      <p class="upload-hint">or click to browse · JPG, PNG, WEBP</p>
+  <div class="s-label">Academic Journey</div>
+  <h2 class="s-title">Education &<br><em>Formation</em></h2>
+  <div class="edu-grid">
+    <div class="edu-timeline">
+      <div class="edu-item"><div class="edu-dot"></div><div class="edu-year">May 2024 — June 2026</div><div class="edu-deg">Master of Computer Applications</div><div class="edu-school">Marwari College, Ranchi · Computer Science</div></div>
+      <div class="edu-item"><div class="edu-dot"></div><div class="edu-year">May 2021 — May 2024</div><div class="edu-deg">Bachelor of Applied Science</div><div class="edu-school">Gossner College, Ranchi · Information Technology</div></div>
+      <div class="edu-item"><div class="edu-dot"></div><div class="edu-year">July 2019 — July 2021</div><div class="edu-deg">Intermediate · Class XII</div><div class="edu-school">St. Xavier's College, Ranchi · Science</div></div>
     </div>
-    <div class="modal-actions">
-      <button class="btn-outline" onclick="closePhotoModal()" style="flex:1;border:1px solid var(--ink);">Cancel</button>
+    <div class="edu-cards">
+      <div class="edu-card"><div class="edu-card-label">Current Focus</div><div class="edu-card-text">"Bridging computational thinking and civil service understanding — using code to analyze governance, and sociology to humanize technology."</div></div>
+      <div class="edu-card"><div class="edu-card-label">Mentorship</div><div class="edu-card-text">"Currently a Mentorship Trainee at Addictive Learning Technology Limited — learning how technology can transform education."</div></div>
+      <div class="edu-card"><div class="edu-card-label">The Journey</div><div class="edu-card-text">"From St. Xavier's science classrooms to MCA labs — and simultaneously into the world of UPSC. Two paths, one purpose."</div></div>
+    </div>
+  </div>
+</section>
+ 
+<section class="philosophy">
+  <p class="phil-quote">"The best solutions are built by people who can think systemically and empathetically — who can write clean code and communicate it clearly, who can solve a problem and ask whether it's the right problem to solve."</p>
+  <p class="phil-attr">— Nikhil Dubey · Personal Philosophy</p>
+</section>
+ 
+<section class="contact" id="contact">
+  <div class="s-label">Let's Connect</div>
+  <h2 class="s-title">Reach Out &<br><em>Say Hello</em></h2>
+  <p class="contact-sub">Always open to conversations about technology, civil services, books, or ideas at the intersection of disciplines.</p>
+  <div class="contact-row">
+    <a href="mailto:nikhildubey056@gmail.com" class="contact-card"><span class="contact-card-icon">✉</span>nikhildubey056@gmail.com</a>
+    <a href="https://www.linkedin.com/in/nikhildubey01" target="_blank" class="contact-card"><span class="contact-card-icon">in</span>linkedin.com/in/nikhildubey01</a>
+    <div class="contact-card"><span class="contact-card-icon">📍</span>Ranchi, Jharkhand, India</div>
+  </div>
+  <a href="articles.html" class="btn btn-gold">Read My Articles →</a>
+</section>
+ 
+<footer>
+  <span class="footer-l">© 2026 Nikhil Dubey · All rights reserved</span>
+  <span class="footer-c">Menace to Monk</span>
+  <span class="footer-l">Built with purpose</span>
+</footer>
+ 
+<div class="modal-bg" id="photoModal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">✕</button>
+    <div class="modal-title">Upload Photo</div>
+    <div class="modal-sub">Profile Picture</div>
+    <div class="drop-zone">
+      <input type="file" accept="image/*" id="photoInput" onchange="handlePhoto(event)">
+      <span class="drop-icon">📸</span>
+      <p class="drop-text">Drag & drop your photo here</p>
+      <p class="drop-hint">or click to browse · JPG, PNG, WEBP</p>
+    </div>
+    <div class="modal-btns">
+      <button class="mbtn" onclick="closeModal()" style="flex:1;">Cancel</button>
+      <button class="mbtn" onclick="removePhoto()" style="color:var(--rust);border-color:rgba(139,58,42,0.3);">Remove Photo</button>
     </div>
   </div>
 </div>
-
+ 
+<div class="toast" id="toast"></div>
+ 
 <script>
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'), i*150); });
-  }, {threshold:0.2});
-  document.querySelectorAll('.edu-item').forEach(el=>observer.observe(el));
-
-  // Photo modal
-  function openPhotoModal() { document.getElementById('photoModal').classList.add('active'); }
-  function closePhotoModal() { document.getElementById('photoModal').classList.remove('active'); }
-  document.getElementById('photoModal').addEventListener('click', function(e){ if(e.target===this) closePhotoModal(); });
-
-  function handlePhotoUpload(e) {
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = function(ev) {
-      localStorage.setItem('nikhil_photo', ev.target.result);
-      applyPhoto(ev.target.result);
-      closePhotoModal();
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function applyPhoto(src) {
-    const img = document.getElementById('profileImg');
-    const placeholder = document.getElementById('photoPlaceholder');
-    img.src = src;
-    img.style.display = 'block';
-    placeholder.style.display = 'none';
-  }
-
-  // Load saved photo
-  const savedPhoto = localStorage.getItem('nikhil_photo');
-  if(savedPhoto) applyPhoto(savedPhoto);
-
-  // Load articles from localStorage
-  function loadArticles() {
-    const articles = JSON.parse(localStorage.getItem('nikhil_articles') || '[]');
-    const grid = document.getElementById('articlesGrid');
-    const cta = document.getElementById('articlesCta');
-    if(articles.length === 0) return;
-    cta.style.display = 'flex';
-    grid.innerHTML = articles.slice(0,3).map(a => `
-      <div class="article-card" onclick="window.location='articles.html'">
-        <div class="article-tag">${a.category || 'Reflection'}</div>
-        <div class="article-title">${a.title}</div>
-        <div class="article-excerpt">${a.content.substring(0,120)}...</div>
-        <div class="article-meta">
-          <span class="article-date">${new Date(a.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span>
-          <span class="article-read">Read →</span>
-        </div>
+const cur = document.getElementById('cursor');
+const cring = document.getElementById('cring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+function animRing(){rx+=(mx-rx)*0.18;ry+=(my-ry)*0.18;cring.style.left=rx+'px';cring.style.top=ry+'px';requestAnimationFrame(animRing);}
+animRing();
+document.querySelectorAll('a,button,.action-tile,.profile-ring,.pill,.stat,.art-card,.dual-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';cring.style.opacity='0.15';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';cring.style.opacity='0.5';});
+});
+ 
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+  let cur='';const nh=nav.offsetHeight;
+  document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-nh-40)cur=s.id;});
+  document.querySelectorAll('.nav-links a').forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+cur);});
+});
+ 
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const h=this.getAttribute('href');if(!h||h==='#')return;
+    const t=document.querySelector(h);if(!t)return;
+    e.preventDefault();
+    const nh=nav.offsetHeight;
+    window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-nh-8,behavior:'smooth'});
+  });
+});
+ 
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.15});
+document.querySelectorAll('.reveal,.edu-item,.edu-card,.stat').forEach(el=>obs.observe(el));
+ 
+function openModal(){document.getElementById('photoModal').classList.add('open');}
+function closeModal(){document.getElementById('photoModal').classList.remove('open');}
+document.getElementById('photoModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+ 
+function handlePhoto(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{localStorage.setItem('nikhil_photo',ev.target.result);applyPhoto(ev.target.result);closeModal();showToast('Profile photo updated!');};
+  reader.readAsDataURL(file);
+}
+ 
+function applyPhoto(src){
+  const img=document.getElementById('profileImg');
+  img.src=src;img.style.display='block';
+  document.getElementById('phIcon').style.display='none';
+  document.getElementById('phText').style.display='none';
+}
+ 
+function removePhoto(){
+  localStorage.removeItem('nikhil_photo');
+  document.getElementById('profileImg').style.display='none';
+  document.getElementById('phIcon').style.display='block';
+  document.getElementById('phText').style.display='block';
+  closeModal();showToast('Photo removed');
+}
+ 
+const saved=localStorage.getItem('nikhil_photo');
+if(saved)applyPhoto(saved);
+ 
+function loadArticles(){
+  const arts=JSON.parse(localStorage.getItem('nikhil_articles')||'[]').filter(a=>a.status==='published');
+  const grid=document.getElementById('articlesGrid');
+  if(!arts.length)return;
+  grid.innerHTML=arts.slice(0,3).map(a=>`
+    <div class="art-card reveal" onclick="window.location='articles.html'">
+      <div class="art-tag">${a.category}</div>
+      <div class="art-title">${a.title}</div>
+      <div class="art-excerpt">${a.content.substring(0,130)}…</div>
+      <div class="art-footer">
+        <span class="art-date">${new Date(a.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span>
+        <span class="art-read">Read →</span>
       </div>
-    `).join('');
-  }
-  loadArticles();
-
-  // Smooth scroll with fixed navbar offset
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
-      if(!href || href === '#') return;
-      const target = document.querySelector(href);
-      if(!target) return;
-      e.preventDefault();
-      const navHeight = document.querySelector('nav').offsetHeight;
-      const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 8;
-      window.scrollTo({ top, behavior: 'smooth' });
-    });
-  });
-
-  // Active nav highlight on scroll
-  const sections = document.querySelectorAll('section[id]');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    const navHeight = document.querySelector('nav').offsetHeight;
-    sections.forEach(s => { if(window.scrollY >= s.offsetTop - navHeight - 40) current = s.id; });
-    document.querySelectorAll('.nav-links a').forEach(l => {
-      l.style.color = l.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
-    });
-  });
+    </div>
+  `).join('');
+  grid.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+loadArticles();
+ 
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent='✦ '+msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
 </script>
 </body>
 </html>
+ 
+
