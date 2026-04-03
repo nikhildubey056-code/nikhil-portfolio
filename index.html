@@ -416,10 +416,26 @@ function openModal(){document.getElementById('photoModal').classList.add('open')
 function closeModal(){document.getElementById('photoModal').classList.remove('open');}
 document.getElementById('photoModal').addEventListener('click',function(e){if(e.target===this)closeModal();});
  
-function handlePhoto(e){
+async function handlePhoto(e){
   const file=e.target.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=ev=>{localStorage.setItem('nikhil_photo',ev.target.result);applyPhoto(ev.target.result);closeModal();showToast('Profile photo updated!');};
+  reader.onload=async ev=>{
+    try{
+      // Save to MongoDB
+      await ProfileAPI.uploadPhoto(ev.target.result);
+      // Also save locally for fast loading
+      localStorage.setItem('nikhil_photo',ev.target.result);
+      applyPhoto(ev.target.result);
+      closeModal();
+      showToast('Profile photo saved to database!');
+    }catch(err){
+      // Fallback to localStorage if API fails
+      localStorage.setItem('nikhil_photo',ev.target.result);
+      applyPhoto(ev.target.result);
+      closeModal();
+      showToast('Photo saved locally!');
+    }
+  };
   reader.readAsDataURL(file);
 }
  
@@ -430,16 +446,37 @@ function applyPhoto(src){
   document.getElementById('phText').style.display='none';
 }
  
-function removePhoto(){
+async function removePhoto(){
+  try{
+    await ProfileAPI.deletePhoto();
+  }catch(err){
+    console.log('API remove failed, removing locally');
+  }
   localStorage.removeItem('nikhil_photo');
   document.getElementById('profileImg').style.display='none';
   document.getElementById('phIcon').style.display='block';
   document.getElementById('phText').style.display='block';
-  closeModal();showToast('Photo removed');
+  closeModal();
+  showToast('Photo removed');
 }
  
-const saved=localStorage.getItem('nikhil_photo');
-if(saved)applyPhoto(saved);
+// Try loading from MongoDB first, fallback to localStorage
+async function initPhoto(){
+  try{
+    const res=await ProfileAPI.get();
+    if(res.profile&&res.profile.photo){
+      applyPhoto(res.profile.photo);
+      localStorage.setItem('nikhil_photo',res.profile.photo);
+    }else{
+      const saved=localStorage.getItem('nikhil_photo');
+      if(saved)applyPhoto(saved);
+    }
+  }catch(err){
+    const saved=localStorage.getItem('nikhil_photo');
+    if(saved)applyPhoto(saved);
+  }
+}
+initPhoto();
  
 function loadArticles(){
   const arts=JSON.parse(localStorage.getItem('nikhil_articles')||'[]').filter(a=>a.status==='published');
