@@ -135,6 +135,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .toast.error{border-left-color:var(--rust);}
 @media(max-width:900px){nav{padding:1rem 1.5rem;}.nav-links{display:none;}.main{grid-template-columns:1fr;}.list-panel{position:static;max-height:none;}.page-header{padding:5rem 2rem 2rem;}.editor-panel{padding:2rem;}}
 </style>
+<script>
+const API_BASE = 'https://nikhil-backend-d73f.onrender.com/api';
+async function apiCall(endpoint,method='GET',body=null){try{const options={method,headers:{'Content-Type':'application/json'}};if(body)options.body=JSON.stringify(body);const res=await fetch(`${API_BASE}${endpoint}`,options);const data=await res.json();if(!data.success&&res.status>=400)throw new Error(data.error||'API error');return data;}catch(err){throw err;}}
+const ArticlesAPI={getAll:(p={})=>{const q=new URLSearchParams(p).toString();return apiCall(`/articles${q?'?'+q:''}`);},getOne:(id)=>apiCall(`/articles/${id}`),create:(d)=>apiCall('/articles','POST',d),update:(id,d)=>apiCall(`/articles/${id}`,'PUT',d),delete:(id)=>apiCall(`/articles/${id}`,'DELETE')};
+const ProfileAPI={get:()=>apiCall('/profile'),update:(d)=>apiCall('/profile','PUT',d),uploadPhoto:(b)=>apiCall('/profile/photo','PUT',{photo:b}),deletePhoto:()=>apiCall('/profile/photo','DELETE')};
+</script>
 </head>
 <body>
 <div id="cur"></div><div id="cring"></div>
