@@ -4,7 +4,42 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Articles — Nikhil Dubey</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="api.js"></script>
+<script>
+const API_BASE = 'https://nikhil-backend-d73f.onrender.com/api';
+
+async function apiCall(endpoint, method = 'GET', body = null) {
+  try {
+    const options = { method, headers: { 'Content-Type': 'application/json' } };
+    if (body) options.body = JSON.stringify(body);
+    const res = await fetch(`${API_BASE}${endpoint}`, options);
+    const data = await res.json();
+    if (!data.success && res.status >= 400) throw new Error(data.error || 'API error');
+    return data;
+  } catch (err) {
+    console.error(`API Error:`, err.message);
+    throw err;
+  }
+}
+
+const ArticlesAPI = {
+  getAll: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return apiCall(`/articles${query ? '?' + query : ''}`);
+  },
+  getOne: (id) => apiCall(`/articles/${id}`),
+  create: (data) => apiCall('/articles', 'POST', data),
+  update: (id, data) => apiCall(`/articles/${id}`, 'PUT', data),
+  delete: (id) => apiCall(`/articles/${id}`, 'DELETE'),
+  setStatus: (id, status) => apiCall(`/articles/${id}/status`, 'PUT', { status })
+};
+
+const ProfileAPI = {
+  get: () => apiCall('/profile'),
+  update: (data) => apiCall('/profile', 'PUT', data),
+  uploadPhoto: (base64) => apiCall('/profile/photo', 'PUT', { photo: base64 }),
+  deletePhoto: () => apiCall('/profile/photo', 'DELETE')
+};
+</script>
 <style>
 :root{--bg:#1a1410;--surface:#231c16;--gold:#c9a84c;--gold-l:#e8d5a3;--cream:#faf7f2;--muted:#6b5c4e;--border:rgba(201,168,76,0.25);--rust:#8b3a2a;--success:#4a6741;}
 *{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
